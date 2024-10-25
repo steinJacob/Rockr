@@ -58,7 +58,11 @@ Takes (isMenuVisible : useState), (menuLinks : String[]), and (menuNames : Strin
 - Requires declaration of parallel lists (menuLinks and menuNames), where each link is the same index as the name of the link. Will create a button with the    menuNames text that redirects to corresponding menuLinks link
 
 ### Listing.js
-Returns a listing div. Creates a section to display a listing image and for decision buttons.
+Creates listings and has the ability to filter them by color, condition, and price.
+
+Gives the user an ability to add a listing and declare all the information about it.
+
+Has a "Listings" grid that shows the listings and gives the users an ability to edit or delete them.
 
 Currently only pulls from locally stored images, in future it should pull from back-end server.
 
