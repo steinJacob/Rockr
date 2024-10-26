@@ -7,7 +7,7 @@ export default function Listings() {
     Authorization();
 
     const [listings, setListings] = useState([]);
-    const [filteredListings, setFilteredListings] = useState(listings);
+    const [filteredListings, setFilteredListings] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [newListing, setNewListing] = useState({ name: '', description: '', image: null, color: '', condition: '', price: '' });
     const [isEditing, setIsEditing] = useState(false);
@@ -42,8 +42,11 @@ export default function Listings() {
             const updatedListings = [...listings];
             updatedListings[editingIndex] = newListing;
             setListings(updatedListings);
+            setFilteredListings(updatedListings);
         } else {
-            setListings([...listings, newListing]);
+            const updatedListings = [...listings, newListing];
+            setListings(updatedListings);
+            setFilteredListings(updatedListings);
         }
 
         setNewListing({ name: '', description: '', image: null, color: '', condition: '', price: '' });
@@ -64,6 +67,7 @@ export default function Listings() {
     const handleDelete = (index) => {
         const updatedListings = listings.filter((listing, i) => i !== index);
         setListings(updatedListings);
+        setFilteredListings(updatedListings);
     };
 
     // Handle filter changes
@@ -74,7 +78,7 @@ export default function Listings() {
 
     // Filter listings based on user input
     const filterListings = () => {
-        let updatedListings = listings.filter((listing) => {
+        const updatedListings = listings.filter((listing) => {
             const matchColor = filters.color === '' || listing.color === filters.color;
             const matchCondition = filters.condition === '' || listing.condition === filters.condition;
             const matchPrice = filters.maxPrice === '' || parseInt(listing.price) <= parseInt(filters.maxPrice);
@@ -83,18 +87,17 @@ export default function Listings() {
         setFilteredListings(updatedListings);
     };
 
-    // Inside your Listings component
+    // Load listings from local storage on initial render
     useEffect(() => {
-        // Load listings from local storage
         const savedListings = JSON.parse(localStorage.getItem('listings')) || [];
         setListings(savedListings);
+        setFilteredListings(savedListings);
     }, []);
 
+    // Re-filter listings whenever filters change
     useEffect(() => {
-        // Save listings to local storage whenever they change
-        localStorage.setItem('listings', JSON.stringify(listings));
-        filterListings(); // Ensure you call this if you need to re-filter after loading
-    }, [listings]);
+        filterListings();
+    }, [filters]);
 
     // Handle click on listing to view details
     const handleListingClick = (index) => {
@@ -221,32 +224,28 @@ export default function Listings() {
                                 
                                 <label>Picture:</label>
                                 <input type="file" accept="image/*" onChange={handleImageUpload} />
-                                <button onClick={handleSubmit} className="submit-button">
-                                    {isEditing ? "Save Changes" : "Done"}
-                                </button>
-                                <button onClick={toggleModal} className="close-button">Cancel</button>
+
+                                <button onClick={handleSubmit} className="submit-button">{isEditing ? "Save Changes" : "Add Listing"}</button>
                             </>
                         )}
                     </div>
                 </div>
             )}
 
-            
-            {/* Display filtered listings */}
-            <div className="listings-display">
-                <h2>Your Listings</h2>
-                <div className="listings-grid">
-                    {filteredListings.map((listing, index) => (
-                        <div key={index} className="listing-item" onClick={() => handleListingClick(index)}>
-                            <img src={listing.image} alt={listing.name} />
-                            <h3>{listing.name}</h3>
-                            <button onClick={(e) => { e.stopPropagation(); handleEdit(index); }} className="edit-button">Edit</button>
-                            <button onClick={(e) => { e.stopPropagation(); handleDelete(index); }} className="delete-button">Delete</button>
-                        </div>
-                    ))}
-                </div>
+            {/* Listings grid */}
+            <div className="listings-grid">
+                {filteredListings.map((listing, index) => (
+                    <div key={index} className="listing-item" onClick={() => handleListingClick(index)}>
+                        <h3>{listing.name}</h3>
+                        {listing.image && <img src={listing.image} alt={listing.name} />}
+                        <p>Price: ${listing.price}</p>
+                        <button onClick={(e) => { e.stopPropagation(); handleEdit(index); }}>Edit</button>
+                        <button onClick={(e) => { e.stopPropagation(); handleDelete(index); }}>Delete</button>
+                    </div>
+                ))}
             </div>
         </div>
     );
 }
+
 
