@@ -193,7 +193,7 @@ app.post('/getListing', async (req, res) => {
 
   query = "INSERT INTO Seen_listings (listingId, userId) VALUES (" + listingId + ", " + userId + ");";
   sendQuery(query);
-  let responsePath = imagePath + ".jpeg";
+  let responsePath = imagePath;
   console.log("Sending listing");
   console.log("--------------------------------------");
   return res.send(JSON.stringify({imagePath: responsePath, listingId: listingId, creatorUsername: creatorUsername}));
@@ -230,14 +230,14 @@ app.post("/getChatOverviews", async (req, res) => {
   if (!username) 
     return;
 
-  let query = "SELECT L.listingId, L.listingName, U.username FROM Listings L, User_information U WHERE (L.listingId in (SELECT listingId FROM MatchedWith WHERE userId = (SELECT id FROM User_information WHERE username = '" + username + "'))) AND (U.id = L.creatorId);";
+  let query = "SELECT L.listingId, L.listingName, U.username, L.imagePath FROM Listings L, User_information U WHERE (L.listingId in (SELECT listingId FROM MatchedWith WHERE userId = (SELECT id FROM User_information WHERE username = '" + username + "'))) AND (U.id = L.creatorId);";
   let queryResponse = await sendQuery(query);
   if (!queryResponse) {
     return;
   }
   let outgoingChatListings = queryResponse[0];
   
-  query = "SELECT L.listingId, L.listingName, U.username FROM Listings L, User_information U WHERE (L.creatorId = (SELECT id FROM User_information WHERE username = '" + username + "')) AND (U.id IN (SELECT userId FROM MatchedWith WHERE listingId = L.listingId));"
+  query = "SELECT L.listingId, L.listingName, U.username, L.imagePath FROM Listings L, User_information U WHERE (L.creatorId = (SELECT id FROM User_information WHERE username = '" + username + "')) AND (U.id IN (SELECT userId FROM MatchedWith WHERE listingId = L.listingId));"
   queryResponse = await sendQuery(query);
   if (!queryResponse) {
     return;
