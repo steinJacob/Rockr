@@ -58,6 +58,11 @@
     text-align: center;
 }
 
+.chat-container {
+    overflow-y: auto;
+    height: 60vh;
+}
+
 .sent-message {
     background-color: rgb(48, 64, 76);
     display: flex;

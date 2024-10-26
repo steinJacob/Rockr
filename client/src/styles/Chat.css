@@ -78,6 +78,10 @@
     cursor: pointer;
 }
 
+.chat-image {
+    height: 180px;
+}
+
 .chat-titles {
     padding-left: 50px;
     width: 20%;

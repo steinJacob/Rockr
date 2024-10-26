@@ -24,6 +24,7 @@ export default function IndividualChat() {
     const [inputMessage, setInputMessage] = useState("");
 
     const intervalRef = useRef(null);
+    const chatContainerRef = useRef(null);
 
     const updateChat = () => {
         Authorization();
@@ -65,6 +66,12 @@ export default function IndividualChat() {
         return () => clearInterval(intervalRef.current);
     }, []);
 
+    useEffect(() => {
+        if (chatContainerRef.current) {
+            chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        }
+    }, [messages] );
+
     const sendMessage = () => {
         console.log(inputMessage);
         let body = {
@@ -96,14 +103,16 @@ export default function IndividualChat() {
                 <SideMenu isMenuVisible = {isMenuVisible} menuNames = {menuNames} menuLinks = {menuLinks}/>
                 <div className = 'main-area'>
                     <div className = "chat-title">
-                        <h1>{listingName} by {userId}</h1>
+                        <h1>{listingName} : {userId}</h1>
                     </div>
-                    {messages.map(item => (
-                        <div className = {item.userId == myId ? "sent-message" : "received-message"}>
-                            <h2 className = "chat-user">{item.userId == myId ? "Me:" : userId + ":"}</h2>
-                            <p className = "chat-message">{item.text}</p>
-                        </div>
-                    ))}
+                    <div ref = {chatContainerRef} className = "chat-container">
+                        {messages.map(item => (
+                            <div className = {item.userId == myId ? "sent-message" : "received-message"}>
+                                <h2 className = "chat-user">{item.userId == myId ? "Me:" : userId + ":"}</h2>
+                                <p className = "chat-message">{item.text}</p>
+                            </div>
+                        ))}
+                    </div>
                     <div className = 'create-message-div'>
                         <input className = "new-message" type="text" value = {inputMessage} onChange = {handleInput} placeholder="Write your message"></input>
                         <h1 className = "send-message-btn" onClick={sendMessage}>Send</h1>
