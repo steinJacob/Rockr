@@ -4,8 +4,11 @@ import SideMenu from '../components/SideMenu';
 import Listing from '../components/Listing';
 import CustomNavLink from "../components/CustomNavLink";
 import '../styles/Home.css';
+import {Authorization} from '../components/Authorization';
 
 export default function Home() {
+    Authorization();
+
     const [isMenuVisible, setIsMenuVisible] = useState(false);
 
     const toggleMenu = () => {

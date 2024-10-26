@@ -1,58 +1,101 @@
+.main-container {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
 .header {
     width: 100%;
     text-align: center;
-    left:35%;
+    color:antiquewhite;
+    background-color: saddlebrown;
+    left:2px;
+}
+
+.header h1 {
+    color:antiquewhite;
+}
+
+.profile {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.profile-name {
+    font-size: 2em;
+    margin-top: 0;
+    align-content: center;
+}
+
+.profile-description {
+    font-size: 1.2em;
+    color: white;
+    justify-content: center;
+    text-align: center;
+}
+
+.input-text {
+    width: 250px;
+    height: 25px;
+    border-color: #C6A74A;
+    border-style:double;
+    border-width:5px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: antiquewhite;
+    font-size: 16px;
+    text-shadow: 1px 1px 1px slategray;
+}
+
+.button {
+    background-color: antiquewhite;
+    color:black;
+    text-shadow: 1px 1px 1px slategray;
+    padding: 5px 10px;
+    border-top-color: red;
+    border-left-color: red;
+    border-bottom-color: darkred;
+    border-right-color: darkred;
+    cursor: pointer;
+} 
+.button:hover {
+    background-color:peachpuff;
 }
 
 .user-info-box {
-    display: static;
-    width: 400px;
-    height: 200px;
-    border: 10px slateblue;
-    background-color: slategray;
-    padding: 10px;
-    margin: 10px;
+    display: flexbox;
+    border-style:groove;
+    border-color: darkred;
+    border-width: 5px;
     box-shadow: 2px;
     border-radius: 50px;
+    background-color: saddlebrown;
+    width: 500px;
+    padding: 25px;
+    margin: 20px;
     color: white;
-    position:fixed;
+    text-shadow: 2px 2px 2px rgb(0, 0, 0);
+    position:relative;
     top: 20%;
-    left: 35%;
+    justify-content: center;
+    text-align: center;
 }
 
-.location-link-box {
+.change-info-box {
     display: static;
-    width: 400px;
-    height: 50px;
-    border: 10px slateblue;
-    background-color: slategray;
-    padding: 10px;
-    margin: 10px;
+    border-style:groove;
+    border-color: darkred;
+    border-width: 5px;
+    background-color: saddlebrown;
+    padding: 25px;
+    margin: 20px;
     box-shadow: 2px;
     border-radius: 50px;
     color: white;
-    position:fixed;
-    top:55%;
-    left:35%;
-    align-content: center;
-}
-.location-link-box:hover {
-    background-color: black;
-}
-
-.listing-link-box {
-    display: static;
-    width: 400px;
-    height: 50px;
-    border: 10px slateblue;
-    background-color: slategray;
-    padding: 10px;
-    margin: 10px;
-    box-shadow: 2px;
-    border-radius: 50px;
-    color: white;
-    position:fixed;
-    top:70%;
-    left:35%;
-    align-content: center;
+    text-shadow: 2px 2px 2px rgb(0, 0, 0);
+    position:relative;
+    top: -58px;
+    left: 200px;
+    justify-content: center;
 }

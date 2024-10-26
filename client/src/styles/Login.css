@@ -1,0 +1,68 @@
+.main-container {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+.header {
+    width: 100%;
+    justify-content: center;
+    top: 10%;
+}
+
+.spacer {
+    font-size: 36px;
+}
+
+.profile {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.profile-name {
+    font-size: 2em;
+    margin-top: 0;
+    align-content: center;
+}
+
+.login-label {
+    font-size: 1.2em;
+    margin-right: 10px;
+    color: white;
+}
+
+.input-text {
+    width: 250px;
+    height: 25px;
+    border-style:double;
+    border-width:5px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: lightgray;
+    font-size: 16px;
+    text-shadow: 1px 1px 1px slategray;
+}
+
+.button {
+    color: slategray;
+}
+
+.user-info-box {
+    display: flexbox;
+    border-style:groove;
+    border-color: black;
+    border-width: 5px;
+    background-color: slateblue;
+    width: 500px;
+    padding: 25px;
+    margin: 20px;
+    box-shadow: 2px;
+    border-radius: 50px;
+    color: white;
+    text-shadow: 2px 2px 2px rgb(0, 0, 0);
+    position:relative;
+    top: 20%;
+    justify-content: center;
+    text-align: center;
+}

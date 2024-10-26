@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from "react";
 import CustomNavLink from "../components/CustomNavLink";
 import "../styles/Home.css";
+import {Authorization} from '../components/Authorization';
 
 export default function Chat() {
+    Authorization();
     return (
         <div>
             <h1 className="header">Welcome to the Chat Page!</h1>

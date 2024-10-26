@@ -1,8 +1,11 @@
 .header {
     display: flex;
-    background-color: rgb(27, 36, 43);
+    background-color: slateblue;
     color: white;
-    border: 0px;
+    text-shadow: 2px 2px 2px rgb(0, 0, 0);
+    border-style:groove;
+    border-color: black;
+    border-bottom-width: 5px;
     margin: 0px;
     padding: 0px;
     width: 100%;
@@ -39,8 +42,11 @@
 .sidebar {
     display: flex;
     flex-direction: column;
-    background-color: rgb(48, 64, 76);
+    background-color: darkred;
     color: white;
+    text-shadow: 1px 1px 1px #C6A74A;
+    border-radius: 2px;
+    border-color: black;
     text-align: left;
 }
 
@@ -52,9 +58,11 @@
     padding: 15px;
     font-size: 24px;
 }
-/*orig background: rgb(70, 93, 110)*/
+
 .listing-section {
-    background-color: rgb(195, 197, 199);
+    background-color: antiquewhite;
+    border-width: 5px;
+    border-color: darkred;
     height: 100%;
     padding: 0px;
     border: 0px;
@@ -70,8 +78,15 @@
     padding-right: 25px;
     margin-left: 25px;
     margin-right: 25px;
-    background-color: rgb(48, 64, 76);
+    background-color: saddlebrown;
+    border-width: 2px;
+    border-style: double;
+    border-top-color: darkred;
+    border-left-color: darkred;
+    border-bottom-color: darkred;
+    border-right-color: darkred;
     color: white;
+    text-shadow: 1px 1px 1px darkred;
     cursor: pointer;
 }
 
@@ -84,5 +99,5 @@ body, html {
     margin: 0px;
     padding: 0px;
     border: 0px;
-    background-color: rgb(195, 197, 199);
+    background-color: antiquewhite;
 }
