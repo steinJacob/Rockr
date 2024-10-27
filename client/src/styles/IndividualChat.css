@@ -22,7 +22,7 @@
 
 .header h2 {
     cursor: pointer;
-    background-color: rgb(48, 64, 76);
+    background-color: rgb(66, 33, 11);
     padding: 5px;
     margin: 10px;
 }
@@ -35,7 +35,7 @@
     display: flex;
     height: 100vh;
     flex-direction: column;
-    background-color: rgb(48, 64, 76);
+    background-color: rgb(66, 33, 11);
     color: white;
     text-align: left;
 }
@@ -50,16 +50,21 @@
 }
 
 .main-area {
-    background-color: rgb(70, 93, 110);
+    background-color: antiquewhite;
     height: 100%;
     width: auto;
     flex: 1;
-    color: white;
+    color: black;
     text-align: center;
 }
 
+.chat-container {
+    overflow-y: auto;
+    height: 60vh;
+}
+
 .sent-message {
-    background-color: rgb(48, 64, 76);
+    background-color: rgb(206, 178, 142);
     display: flex;
     margin: 10px;
     padding: 3px;
@@ -68,7 +73,7 @@
 }
 
 .received-message {
-    background-color: rgb(48, 64, 76);
+    background-color: rgb(206, 178, 142);
     display: flex;
     margin: 10px;
     padding: 3px;
@@ -82,7 +87,7 @@
 
 .create-message-div {
     display: flex;
-    background-color: rgb(58, 69, 76);
+    background-color: rgb(206, 178, 142);
     justify-content: right;
 }
 
@@ -92,8 +97,8 @@
 
 .new-message {
     flex: 3;
-    background-color: rgb(37, 49, 58);
-    color: white;
+    background-color: rgb(163, 136, 100);
+    color: black;
     font-size: 18px;
 }
 

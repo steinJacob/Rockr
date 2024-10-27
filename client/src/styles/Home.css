@@ -25,7 +25,7 @@
 
 .header h2 {
     cursor: pointer;
-    background-color: rgb(48, 64, 76);
+    background-color: rgb(66, 33, 11);
     padding: 5px;
     margin: 10px;
 }
@@ -36,7 +36,6 @@
 }
 
 .listing-image img {
-    width: 40%;
     padding: 25px;
     height: 75vh;
 }
@@ -44,7 +43,7 @@
 .sidebar {
     display: flex;
     flex-direction: column;
-    background-color: darkred;
+    background-color: rgb(66, 33, 11);
     color: white;
     text-shadow: 1px 1px 1px #C6A74A;
     border-radius: 2px;
@@ -79,7 +78,7 @@
     padding-right: 25px;
     margin-left: 25px;
     margin-right: 25px;
-    background-color: saddlebrown;
+    background-color: rgb(66, 33, 11);
     border-width: 2px;
     border-style: double;
     border-top-color: darkred;

@@ -200,6 +200,7 @@ app.post('/newUserInfo', async (req, res) => {
   //grab user via token
   const user = isAuthorized(userT);
   time = new Date();
+  userTokenMap.delete(user);
   userTokenMap.set(nUN, [userT, time]);
   if(user) {
     //try-catches are separate to return relevant error messages for each problem
@@ -243,8 +244,9 @@ app.post('/getListing', async (req, res) => {
   
   query = "SELECT id FROM User_information WHERE username = '" + username + "';";
   let userId = "";
+  console.log(query);
   queryResponse = await sendQuery(query);
-  if (!queryResponse) {
+  if (!queryResponse || !queryResponse[0][0]) {
     return;
   }
   userId = queryResponse[0][0].id;
@@ -296,14 +298,14 @@ app.post("/getChatOverviews", async (req, res) => {
   if (!username) 
     return;
 
-  let query = "SELECT L.listingId, L.listingName, U.username FROM Listings L, User_information U WHERE (L.listingId in (SELECT listingId FROM MatchedWith WHERE userId = (SELECT id FROM User_information WHERE username = '" + username + "'))) AND (U.id = L.creatorId);";
+  let query = "SELECT L.listingId, L.listingName, U.username, L.imagePath FROM Listings L, User_information U WHERE (L.listingId in (SELECT listingId FROM MatchedWith WHERE userId = (SELECT id FROM User_information WHERE username = '" + username + "'))) AND (U.id = L.creatorId);";
   let queryResponse = await sendQuery(query);
   if (!queryResponse) {
     return;
   }
   let outgoingChatListings = queryResponse[0];
   
-  query = "SELECT L.listingId, L.listingName, U.username FROM Listings L, User_information U WHERE (L.creatorId = (SELECT id FROM User_information WHERE username = '" + username + "')) AND (U.id IN (SELECT userId FROM MatchedWith WHERE listingId = L.listingId));"
+  query = "SELECT L.listingId, L.listingName, U.username, L.imagePath FROM Listings L, User_information U WHERE (L.creatorId = (SELECT id FROM User_information WHERE username = '" + username + "')) AND (U.id IN (SELECT userId FROM MatchedWith WHERE listingId = L.listingId));"
   queryResponse = await sendQuery(query);
   if (!queryResponse) {
     return;
