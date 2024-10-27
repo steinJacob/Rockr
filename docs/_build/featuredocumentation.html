@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Feature Documentation &#8212; Rockr 1.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/basic.css?v=686e5160" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
+    <script src="_static/documentation_options.js?v=8d563738"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="feature-documentation">
+<h1>Feature Documentation<a class="headerlink" href="#feature-documentation" title="Link to this heading">¶</a></h1>
+<hr class="docutils" />
+<blockquote></section>
+<section id="react-app-client">
+<h1>React App Client<a class="headerlink" href="#react-app-client" title="Link to this heading">¶</a></h1>
+<hr class="docutils" />
+<section id="pages">
+<h2>Pages<a class="headerlink" href="#pages" title="Link to this heading">¶</a></h2>
+<blockquote><section id="chat-js">
+<h3>Chat.js<a class="headerlink" href="#chat-js" title="Link to this heading">¶</a></h3>
+<p>The Chat overview page.</p>
+<p>Displays all incoming and outgoing chats for a user. Each chat represents a match with a listing, so it is not on a per-user basis, and instead per-match.
+Incoming chats represent matches that have been opened by other users for YOUR listing.
+Outgoing chats represent matches that YOU have actively opened.</p>
+<p>Requires Authorization</p>
+</section>
+<section id="createaccount-js">
+<h3>CreateAccount.js<a class="headerlink" href="#createaccount-js" title="Link to this heading">¶</a></h3>
+<p>The Create Account Page. Can be accessed via the Login page.</p>
+<p>Displays input boxes for a user’s first name, last name, username, password, email, and phone number, as well as a ‘Submit’ button and a link to the Login Page.</p>
+<p>Create Account Inputs:
+User can input their personal information and submit it.</p>
+<ul class="simple">
+<li><p>Successful Submission: The user’s account is added and saved to the database, and the user can then log in on future webpage visits.</p></li>
+<li><p>Unsuccessful Submission: The user’s account is not created.</p></li>
+</ul>
+</section>
+<section id="home-js">
+<h3>Home.js<a class="headerlink" href="#home-js" title="Link to this heading">¶</a></h3>
+<p>The Home Page. Can be accessed via a successful login on the Login Page.</p>
+<p>Displays a ‘listing’ for the user to ‘swipe’ “Yes!” or “No!” on, which contains an image of a chair.
+Will only pull listings that fall into the current user’s preferences.
+Contains a side menu which is accessed via a ‘Show Menu’ button in the top-left of the page.
+Contains a header which displays the name of the webpage.</p>
+<p>Requires Authorization</p>
+</section>
+<section id="individualchat-js">
+<h3>IndividualChat.js<a class="headerlink" href="#individualchat-js" title="Link to this heading">¶</a></h3>
+<p>The singular chat page. Can be accessed through Chat.js page.</p>
+<p>Contains URL parameters:</p>
+<blockquote><p>IndividualChat/{userId}/{listingId}</p>
+<ul class="simple">
+<li><p>Where userId is the other user that the current user is chatting with.</p></li>
+<li><p>Where listingId is the id of the listing that the other user created.</p></li>
+</ul>
+</blockquote><p>Displays chat messages between 2 users for one match. The 2 users are determined by the user that matched, and the user that created the listing.
+The chat will actively update every 5 seconds to ensure the user is able to see incoming messages without refreshing the page.
+If request for messages returns empty (not the same as the “Messages” index being empty), the user will be redirected back to the Chat overview page.</p>
+<p>updateChat(): Takes no parameters, will request to update chat messages from /getIndividualChat endpoint</p>
+<p>sendMessage(): Takes no parameters, will request to insert current message into the database through /sendMessage endpoint</p>
+<p>Requires Authorization</p>
+</section>
+<section id="login-js">
+<h3>Login.js<a class="headerlink" href="#login-js" title="Link to this heading">¶</a></h3>
+<p>The Login Page. Displayed upon webpage startup.</p>
+<p>Displays the webpage name, username input, password input, and a link to the ‘Create Account’ page.</p>
+<p>Login Inputs:
+User can input their personal username and password to gain access to the main site.</p>
+<ul class="simple">
+<li><p>Successful Login: Redirected to Home Page</p></li>
+<li><p>Unsuccessful Login: Remains on Login Page</p></li>
+</ul>
+</blockquote></section>
+</section>
+<section id="components">
+<h2>Components<a class="headerlink" href="#components" title="Link to this heading">¶</a></h2>
+<blockquote><section id="allchats-js">
+<h3>AllChats.js<a class="headerlink" href="#allchats-js" title="Link to this heading">¶</a></h3>
+<p>Returns a div that contains previews of all of the current users chats.</p>
+<p>Upon mount, will request to get chat overviews from /getChatOverviews endpoint. The div will then be populated with 2 sections, outgoing-chats and incoming-chats, that show previews for the current user.</p>
+<p>Takes (navigate: react-router-dom.useNavigate())</p>
+<ul class="simple">
+<li><p>Due to the nature of React Hooks, useNavigate() must be defined in the parent component at the top level. In order to use navigation to redirect properly, AllChats.js requires this as a parameter.</p></li>
+</ul>
+</section>
+<section id="authorization-js">
+<h3>Authorization.js<a class="headerlink" href="#authorization-js" title="Link to this heading">¶</a></h3>
+<p>Returns nothing. Contains method Authorization() that can be used to check if the current user is authorized.</p>
+<p>To protect resources, simply call Authorization() before loading the resource.
+This will query the back-end server to see if the current token is authorized, if so continue, else redirect to the Login page.</p>
+</section>
+<section id="header-js">
+<h3>Header.js<a class="headerlink" href="#header-js" title="Link to this heading">¶</a></h3>
+<p>Returns a header component. Creates a strip at the top of the page with a title and side-menu button.</p>
+<p>MUST be used alongside SideMenu component</p>
+<p>Takes (isMenuVisible : useState) and (toggleMenu : method) props.</p>
+<ul class="simple">
+<li><p>Requires declaration of boolean useState variable for isMenuVisible prop.</p></li>
+<li><p>Requires declaration of method to change state of isMenuVisible prop.</p></li>
+</ul>
+</section>
+<section id="listing-js">
+<h3>Listing.js<a class="headerlink" href="#listing-js" title="Link to this heading">¶</a></h3>
+<p>Returns a listing div. Creates a section to display a listing image and for decision buttons.</p>
+<p>Currently only pulls from locally stored images, in future it should pull from back-end server.</p>
+</section>
+<section id="sidemenu-js">
+<h3>SideMenu.js<a class="headerlink" href="#sidemenu-js" title="Link to this heading">¶</a></h3>
+<p>Returns a side menu component. Creates a toggleable menu on the left of the page with links to other pages.</p>
+<p>MUST be used alongside Header component</p>
+<p>Takes (isMenuVisible : useState), (menuLinks : String[]), and (menuNames : String[]) props.</p>
+<ul class="simple">
+<li><p>Requires declaration of boolean useState variable for isMenuVisile prop.</p></li>
+<li><p>Requires declaration of parallel lists (menuLinks and menuNames), where each link is the same index as the name of the link. Will create a button with the    menuNames text that redirects to corresponding menuLinks link</p></li>
+</ul>
+</blockquote></blockquote></section>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">Rockr</a></h1>
+
+
+
+
+
+
+
+
+
+<search id="searchbox" style="display: none" role="search">
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Search"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script><h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Jadyn Falls, Jacob Stein, Luka Ratiani, Patrick McCoy.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 8.1.3</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 1.0.0</a>
+      
+      |
+      <a href="_sources/featuredocumentation.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
