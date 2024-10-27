@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import React, {useState, useEffect} from "react";
+import CustomNavLink from "../components/CustomNavLink";
 
 export default function CreateAccount() {
     //account creation variables
@@ -43,7 +43,7 @@ export default function CreateAccount() {
             email: emailInput,
             phoneNum: phoneNumInput
         };
-        fetch('http://localhost:8000/AcctCreation', {
+        fetch('http://localhost:8000/Register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -59,7 +59,7 @@ export default function CreateAccount() {
         <div>
             <div>
                 <h1>Welcome to the CreateAccount Page!</h1>
-                <Link to="/Login">Login Page</Link>
+                <CustomNavLink href="/Login">Login Page</CustomNavLink>
             </div>
             <div>
                 <h2>Create an Account!</h2>

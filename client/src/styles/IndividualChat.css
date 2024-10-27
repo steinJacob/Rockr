@@ -1,6 +1,6 @@
 .header {
     display: flex;
-    background-color: rgb(27, 36, 43);
+    background-color: saddlebrown;
     color: white;
     border: 0px;
     margin: 0px;
@@ -106,5 +106,5 @@ body, html {
     margin: 0px;
     padding: 0px;
     border: 0px;
-    background-color: rgb(27, 36, 43);
+    background-color: antiquewhite;
 }

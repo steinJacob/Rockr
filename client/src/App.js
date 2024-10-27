@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from "./pages/Login.js";
 import CreateAccount from "./pages/CreateAccount.js";
+import VerifyingEmail from "./pages/VerifyingEmail.js";
 import Home from "./pages/Home.js";
 import Profile from "./pages/Profile.js";
 import Chat from "./pages/Chat.js";
@@ -25,6 +26,7 @@ function App() {
           <Route path="/Settings" element= {<Settings/>} />
           <Route path="/Listings" element= {<Listings/>} />
           <Route path="/IndividualChat/:userId/:listingId" element= {<IndividualChat/>} />
+          <Route path="/verify" element={<VerifyingEmail />} />
         </Routes>
       </div>  
     </Router>
