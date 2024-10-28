@@ -36,7 +36,7 @@ export default function Listings() {
         setNewListing({ ...newListing, image: URL.createObjectURL(e.target.files[0]) });
     };
 
-    // Handle form submission for adding or editing a listing
+    // Handle submission for adding or editing a listing
     const handleSubmit = () => {
         if (isEditing) {
             const updatedListings = [...listings];
@@ -51,7 +51,7 @@ export default function Listings() {
         toggleModal();
     };
 
-    // Handle edit button click
+    // handle edit button click
     const handleEdit = (index) => {
         const listingToEdit = listings[index];
         setNewListing(listingToEdit);
@@ -60,40 +60,43 @@ export default function Listings() {
         toggleModal();
     };
 
-    // Handle delete listing
+    // handle delete listing
     const handleDelete = (index) => {
         const updatedListings = listings.filter((listing, i) => i !== index);
         setListings(updatedListings);
     };
 
-    // Handle filter changes
+    // handle filter changes
     const handleFilterChange = (e) => {
         const { name, value } = e.target;
         setFilters({ ...filters, [name]: value });
     };
 
-    // Filter listings based on user input
+    // filter listings based on user input
     const filterListings = () => {
-        let updatedListings = listings.filter((listing) => {
-            const matchColor = filters.color === '' || listing.color === filters.color;
-            const matchCondition = filters.condition === '' || listing.condition === filters.condition;
-            const matchPrice = filters.maxPrice === '' || parseInt(listing.price) <= parseInt(filters.maxPrice);
+        const updatedListings = listings.filter((listing) => {
+            const matchColor = !filters.color || listing.color === filters.color;
+            const matchCondition = !filters.condition || listing.condition === filters.condition;
+            const matchPrice = !filters.maxPrice || parseInt(listing.price) <= parseInt(filters.maxPrice);
             return matchColor && matchCondition && matchPrice;
         });
         setFilteredListings(updatedListings);
     };
 
-    // Inside your Listings component
     useEffect(() => {
-        // Load listings from local storage
+        filterListings();
+    }, [filters, listings]);
+
+    
+    useEffect(() => {
         const savedListings = JSON.parse(localStorage.getItem('listings')) || [];
         setListings(savedListings);
     }, []);
 
     useEffect(() => {
-        // Save listings to local storage whenever they change
+
         localStorage.setItem('listings', JSON.stringify(listings));
-        filterListings(); // Ensure you call this if you need to re-filter after loading
+        filterListings(); 
     }, [listings]);
 
     // Handle click on listing to view details
@@ -159,14 +162,14 @@ export default function Listings() {
                 </label>
             </div>
 
-            {/* Add Listing Button */}
+            {/* add Listing Button */}
             <div className="add-listing-button-container">
                 <button onClick={() => { setIsEditing(false); toggleModal(); }} className="add-listing-button">
                     Add Listing
                 </button>
             </div>
 
-            {/* Modal for viewing or adding/editing a listing */}
+
             {showModal && (
                 <div className="modal" onClick={handleOutsideClick}>
                     <div className="modal-content">
@@ -240,13 +243,14 @@ export default function Listings() {
                         <div key={index} className="listing-item" onClick={() => handleListingClick(index)}>
                             <img src={listing.image} alt={listing.name} />
                             <h3>{listing.name}</h3>
+                            <p>Price: ${listing.price}</p>
                             <button onClick={(e) => { e.stopPropagation(); handleEdit(index); }} className="edit-button">Edit</button>
                             <button onClick={(e) => { e.stopPropagation(); handleDelete(index); }} className="delete-button">Delete</button>
                         </div>
                     ))}
                 </div>
+
             </div>
         </div>
     );
 }
-

@@ -1,23 +1,26 @@
 import React, { useState } from 'react';
-import '../styles/Profile.css';
 
-const Geolocation = () => {
+const Geolocation = ({ currentUserId }) => {
   const [location, setLocation] = useState(null);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const fetchLocation = () => {
     if (navigator.geolocation) {
+      setLoading(true);
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          setLocation({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
+          const { latitude, longitude } = position.coords;
+          setLocation({ lat: latitude, lng: longitude });
           setError("");
+          setLoading(false);
+
+          sendLocationToServer(currentUserId, latitude, longitude);
         },
         (err) => {
           setError(`Error: ${err.message}`);
           setLocation(null);
+          setLoading(false);
         }
       );
     } else {
@@ -25,9 +28,26 @@ const Geolocation = () => {
     }
   };
 
+  const sendLocationToServer = async (userId, lat, lng) => {
+    try{
+      const response = await fetch("/api/saveLocation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ latitude: lat, logitude: lng }),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to save location to the server.");
+      }
+      console.log("Location saved successfully.")
+    } catch (err){
+      setError("Failed to save location to the server.");
+    }
+  };
+
   return (
     <div>
-      <button class="button" onClick={fetchLocation}>Get Location</button>
+      <button onClick={fetchLocation}>Get Location</button>
+      {loading && <p>Loading...</p>}
       {location && (
         <div>
           <h3>Location:</h3>
