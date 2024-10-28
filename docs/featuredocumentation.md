@@ -70,6 +70,15 @@ User can input their personal username and password to gain access to the main s
 
 </blockquote>
 
+### Settings.js
+The Settings Page. Can be accessed by the side menu from the Home Page.
+
+This Page allows users to change the font settings.
+It also allows users to toggle from light mode to dark mode
+It has buttons that allows the user to Logout of their account locally, and also for users to delete their account locally.
+Once the user is logged out, it returns them to the login page.
+Once the user deletes an account it brings them to the create account page.
+
 ## Components
 <blockquote>
 
@@ -109,6 +118,9 @@ MUST be used alongside Header component
 Takes (isMenuVisible : useState), (menuLinks : String[]), and (menuNames : String[]) props.
 - Requires declaration of boolean useState variable for isMenuVisile prop.
 - Requires declaration of parallel lists (menuLinks and menuNames), where each link is the same index as the name of the link. Will create a button with the    menuNames text that redirects to corresponding menuLinks link
+
+### Geolocation.js
+Returns the longitude and latitude of the local server on the Profile Page.
 
 </blockquote>
 
