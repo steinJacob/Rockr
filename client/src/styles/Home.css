@@ -239,12 +239,12 @@ body, html {
 }
 
 .listing-details img {
-    max-width: 100%; /* Make sure the image is responsive */
+    max-width: 100%;
     height: auto;
-    border-radius: 8px; /* Optional: rounded corners for the image */
+    border-radius: 8px;
 }
 
 .listing-details p {
-    margin: 5px 0; /* Spacing between paragraphs */
+    margin: 5px 0; 
 }
 
