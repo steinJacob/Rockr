@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import { Link, useNavigate } from 'react-router-dom';
+import '../styles/Login.css';
 export default function Login() {
     //Variables for user input
     const [uNameInput, setUName] = useState("");
@@ -48,15 +49,29 @@ export default function Login() {
 
     return (
         <div>
-            <h1>Welcome to the Login Page!</h1>
-            <p>Need an account?</p>
-            <Link to="/CreateAccount">Create Account</Link>
-            <div>
-                <input type="text" id="userInputText" name="userInputText" placeholder="Username" onChange={handleUsernameChange} />
-                <input type="text" id="passInputText" name="passInputText" placeholder="Password" onChange={handlePasswordChange} />
-                <button onClick={submitLogin}>Log In</button>
+            <h1 class="header">Welcome to the Login Page!</h1>
+            <p class="spacer"> </p>
+            <div class="main-container">
+                <div class="user-info-box">
+                    <div>
+                        <label class="login-label">Username:</label>
+                        <input type="text" class="input-text" id="userInputText" name="userInputText" placeholder="Username" onChange={handleUsernameChange} />
+                    </div>
+                    <div>
+                    <label class="login-label">Password: </label>
+                        <input type="text" class="input-text" id="passInputText" name="passInputText" placeholder="Password" onChange={handlePasswordChange} />
+                    </div>
+                    <p> </p>
+                    <button onClick={submitLogin}>Log In</button>
+                </div>
             </div>
-            <p>{loginMessage}</p>
+            <div class="main-container">
+                <div class="user-info-box">
+                    <label class="profile-description">Need an account?</label>
+                    <Link to="/CreateAccount">Create Account</Link>
+                </div>
+                <p>{loginMessage}</p>
+            </div>
         </div>
     )
 }

@@ -6,6 +6,8 @@ import { Authorization } from '../components/Authorization';
 import "../styles/IndividualChat.css";
 
 export default function IndividualChat() {
+    const host = process.env.REACT_APP_BACKEND_HOST;
+    const navigate = useNavigate();
 
     const [isMenuVisible, setIsMenuVisible] = useState(false);
     const toggleMenu = () => {
@@ -22,6 +24,7 @@ export default function IndividualChat() {
     const [inputMessage, setInputMessage] = useState("");
 
     const intervalRef = useRef(null);
+    const chatContainerRef = useRef(null);
 
     const updateChat = () => {
         Authorization();
@@ -32,7 +35,7 @@ export default function IndividualChat() {
             userId: userId,
             listingId: listingId
         } 
-        fetch("http://localhost:8000/getIndividualChat", {
+        fetch(host + "/getIndividualChat", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -41,6 +44,9 @@ export default function IndividualChat() {
         })
         .then(res => res.json())
         .then(data => {
+            if (!data) {
+                navigate("/Home");
+            }
             setMyId(data[0]);
             setListingName(data[1]);
             try {
@@ -60,6 +66,12 @@ export default function IndividualChat() {
         return () => clearInterval(intervalRef.current);
     }, []);
 
+    useEffect(() => {
+        if (chatContainerRef.current) {
+            chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        }
+    }, [messages] );
+
     const sendMessage = () => {
         console.log(inputMessage);
         let body = {
@@ -68,7 +80,7 @@ export default function IndividualChat() {
             message: inputMessage,
             listingId: listingId
         }
-        fetch("http://localhost:8000/sendMessage", {
+        fetch(host + "/sendMessage", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -91,14 +103,16 @@ export default function IndividualChat() {
                 <SideMenu isMenuVisible = {isMenuVisible} menuNames = {menuNames} menuLinks = {menuLinks}/>
                 <div className = 'main-area'>
                     <div className = "chat-title">
-                        <h1>{listingName} by {userId}</h1>
+                        <h1>{listingName} : {userId}</h1>
                     </div>
-                    {messages.map(item => (
-                        <div className = {item.userId == myId ? "sent-message" : "received-message"}>
-                            <h2 className = "chat-user">{item.userId == myId ? "Me:" : userId + ":"}</h2>
-                            <p className = "chat-message">{item.text}</p>
-                        </div>
-                    ))}
+                    <div ref = {chatContainerRef} className = "chat-container">
+                        {messages.map(item => (
+                            <div className = {item.userId == myId ? "sent-message" : "received-message"}>
+                                <h2 className = "chat-user">{item.userId == myId ? "Me:" : userId + ":"}</h2>
+                                <p className = "chat-message">{item.text}</p>
+                            </div>
+                        ))}
+                    </div>
                     <div className = 'create-message-div'>
                         <input className = "new-message" type="text" value = {inputMessage} onChange = {handleInput} placeholder="Write your message"></input>
                         <h1 className = "send-message-btn" onClick={sendMessage}>Send</h1>

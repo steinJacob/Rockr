@@ -2,6 +2,7 @@ import {Authorization} from './Authorization';
 import React, {useState, useEffect} from 'react';
 
 function AllChats({ navigate }) {
+    const host = process.env.REACT_APP_BACKEND_HOST;
     const [outgoingChats, setOutgoingChats] = useState([]);
     const [incomingChats, setIncomingChats] = useState([]);
 
@@ -13,7 +14,7 @@ function AllChats({ navigate }) {
         let body = {
             token: myToken
         }
-        fetch('http://localhost:8000/getChatOverviews', {
+        fetch(host + '/getChatOverviews', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -22,6 +23,7 @@ function AllChats({ navigate }) {
         })
         .then(res => res.json())
         .then(data => {
+            console.log(data[0]);
             setOutgoingChats(data[0]);
             setIncomingChats(data[1]);
         });// set useState variables)
@@ -38,6 +40,7 @@ function AllChats({ navigate }) {
                 <h2>Outgoing Chats</h2>
                 {outgoingChats.map((item, index) => (
                     <div className = 'individual-chat' onClick={() => goToChat(item.username, item.listingId)}>
+                        <img className = 'chat-image' src = {item.imagePath}></img>
                         <div className = 'chat-titles'>
                             <h2>{item.listingName}</h2>
                             <h3>{item.username}</h3>
@@ -53,6 +56,7 @@ function AllChats({ navigate }) {
                 <h2>Incoming Chats</h2>
                 {incomingChats.map((item, index) => (
                     <div className = 'individual-chat' onClick={() => goToChat(item.username, item.listingId)}>
+                        <img className = 'chat-image' src = {item.imagePath}></img>
                         <div className = 'chat-titles'>
                             <h2>{item.listingName}</h2>
                             <h3>{item.username}</h3>

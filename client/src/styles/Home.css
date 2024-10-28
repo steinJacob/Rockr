@@ -1,8 +1,11 @@
 .header {
     display: flex;
-    background-color: rgb(27, 36, 43);
+    background-color: saddlebrown;
     color: white;
-    border: 0px;
+    text-shadow: 2px 2px 2px rgb(0, 0, 0);
+    border-style:groove;
+    border-color: black;
+    border-bottom-width: 5px;
     margin: 0px;
     padding: 0px;
     width: 100%;
@@ -22,7 +25,7 @@
 
 .header h2 {
     cursor: pointer;
-    background-color: rgb(48, 64, 76);
+    background-color: rgb(66, 33, 11);
     padding: 5px;
     margin: 10px;
 }
@@ -33,7 +36,6 @@
 }
 
 .listing-image img {
-    width: 40%;
     padding: 25px;
     height: 75vh;
 }
@@ -41,8 +43,11 @@
 .sidebar {
     display: flex;
     flex-direction: column;
-    background-color: rgb(48, 64, 76);
+    background-color: rgb(66, 33, 11);
     color: white;
+    text-shadow: 1px 1px 1px #C6A74A;
+    border-radius: 2px;
+    border-color: black;
     text-align: left;
     height: 100vh;
 }
@@ -57,7 +62,7 @@
 }
 
 .listing-section {
-    background-color: rgb(70, 93, 110);
+    background-color: antiquewhite;
     height: 100%;
     padding: 0px;
     border: 0px;
@@ -73,8 +78,15 @@
     padding-right: 25px;
     margin-left: 25px;
     margin-right: 25px;
-    background-color: rgb(48, 64, 76);
+    background-color: rgb(66, 33, 11);
+    border-width: 2px;
+    border-style: double;
+    border-top-color: darkred;
+    border-left-color: darkred;
+    border-bottom-color: darkred;
+    border-right-color: darkred;
     color: white;
+    text-shadow: 1px 1px 1px darkred;
     cursor: pointer;
 }
 
@@ -87,7 +99,7 @@ body, html {
     margin: 0px;
     padding: 0px;
     border: 0px;
-    background-color: rgb(27, 36, 43);
+    background-color: antiquewhite;
 }
 
 /* New styles for Listings grid */
@@ -235,5 +247,4 @@ body, html {
 .listing-details p {
     margin: 5px 0; /* Spacing between paragraphs */
 }
-
 

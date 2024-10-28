@@ -34,7 +34,7 @@
 .sidebar {
     display: flex;
     flex-direction: column;
-    background-color: rgb(48, 64, 76);
+    background-color: antiquewhite;
     color: white;
     text-align: left;
     height: 100vh;
@@ -50,7 +50,7 @@
 }
 
 .main-area {
-    background-color: rgb(70, 93, 110);
+    background-color: antiquewhite;
     height: 100%;
     width: auto;
     flex: 1;
@@ -59,23 +59,27 @@
 }
 
 .all-chats {
-    background-color: rgb(70, 93, 110);
+    background-color: antiquewhite;
     height: 100%;
     width: auto;
     flex: 1;
-    color: white;
+    color: rgb(9, 9, 9);
 }
 
 .individual-chat {
-    background-color: rgb(60, 79, 94);
+    background-color: rgb(206, 178, 142);
     height: 10%;
     width: auto;
     flex: 1;
     display: flex;
-    color: white;
+    color: black;
     margin: 15px;
     padding: 5px;
     cursor: pointer;
+}
+
+.chat-image {
+    height: 180px;
 }
 
 .chat-titles {
@@ -105,5 +109,5 @@ body, html {
     margin: 0px;
     padding: 0px;
     border: 0px;
-    background-color: rgb(27, 36, 43);
+    background-color: antiquewhite;
 }
