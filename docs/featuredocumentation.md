@@ -23,8 +23,7 @@ Displays input boxes for a user's first name, last name, username, password, ema
 
 Create Account Inputs:
 User can input their personal information and submit it.
-- Successful Submission: The user's account is added and saved to the database, and the user can then log in on future webpage visits.
-- Unsuccessful Submission: The user's account is not created.
+Upon submission, the user then needs to verify their email account. The will be sent an email which contains a link to a verification page. Upon pressing the "verify" button, their account is verified and the can now log in via the Login page.
 
 ### Home.js
 The Home Page. Can be accessed via a successful login on the Login Page.
@@ -64,10 +63,23 @@ The Login Page. Displayed upon webpage startup.
 Displays the webpage name, username input, password input, and a link to the 'Create Account' page.
 
 Login Inputs:
-User can input their personal username and password to gain access to the main site.
+User can input their personal username and password to gain access to the main site. Also checks if the user's account is verified. Non-verified users cannot log in.
 - Successful Login: Redirected to Home Page
 - Unsuccessful Login: Remains on Login Page
 
+### Profile.js
+The Profile Page. Displays user information and allows changes.
+
+The page contains three sections: "User Information", "Communication", and "Password".
+
+## User Information
+Contains the user's first name, last name, and username. These can be changed via a Popup box which appears upon the press of a button. 
+
+## Communication
+Contains the user's email address and phone number. These may also be changed via a Popup box which appears upon the press of a button.
+
+## Password
+Contains the user's password. The password is hidden via a text cover by default. The password can be viewed by pressing the "Show" button. The password can be changed via a Popup box which appears upon the press of a button.
 </blockquote>
 
 ## Components
