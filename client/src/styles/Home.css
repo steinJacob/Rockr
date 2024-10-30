@@ -35,15 +35,23 @@
     height: 100vh;
 }
 
-.listing-image img {
+.listing {
+    display: grid;
+    place-items: center;
+    cursor: grabbing;
+}
+
+.listing-image {
     padding: 25px;
     height: 75vh;
+    border-radius: 0.5rem;
+    cursor: grab;
 }
 
 .sidebar {
     display: flex;
     flex-direction: column;
-    background-color: rgb(66, 33, 11);
+    background-color: rgb(0, 0, 0);
     color: white;
     text-shadow: 1px 1px 1px #C6A74A;
     border-radius: 2px;
@@ -69,6 +77,7 @@
     text-align: center;
     width: auto;
     flex: 1;
+    display: grid;
 }
 
 .listing-btns h2 {

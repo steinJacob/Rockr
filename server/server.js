@@ -290,7 +290,7 @@ app.post('/getListing', async (req, res) => {
   return res.send(JSON.stringify({imagePath: responsePath, listingId: listingId, creatorUsername: creatorUsername}));
 });
 
-app.post('/matchedListing', async (req) => {
+app.post('/matchedListing', async (req, res) => {
   console.log("Attempting to push match");
   let body = req.body;
   const userToken = body.token;
@@ -311,6 +311,8 @@ app.post('/matchedListing', async (req) => {
   query = "INSERT INTO MatchedWith (userId, listingId) VALUES (" + userId + ", " + currListing + ");";
   sendQuery(query);
   console.log("match sent");
+
+  return res.send(JSON.stringify([true]));
 });
 
 app.post("/getChatOverviews", async (req, res) => {
