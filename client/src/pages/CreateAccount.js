@@ -10,7 +10,7 @@ export default function CreateAccount() {
     const [emailInput, setEmail] = useState("");
     const [phoneNumInput, setPhoneNum] = useState("");
     //variable to hold response from backend
-    const [data, setData] = useState("");
+    const [message, setMessage] = useState("");
 
     //handles changes to user input variables
     const handleFNameChange = (event) => {
@@ -31,28 +31,42 @@ export default function CreateAccount() {
     const handlePhoneNumChange = (event) => {
         setPhoneNum(event.target.value);
     }
+
+    //Validates format of inputted email
+    const checkEmail = (email) => {
+        const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        return re.test(email);
+    }
+
     //function to create an account. When 'Submit' button is pressed, the inputs are sent to the backend. 
     //If the inputted data is acceptable, the account will be created, and the user will be brought into the login page.
     const submitCreateAcct = (event) => {
-        event.preventDefault();
-        const createAcctQuery = {
-            firstName: fNameInput,
-            lastName: lNameInput,
-            username: usernameInput,
-            password: passwordInput,
-            email: emailInput,
-            phoneNum: phoneNumInput
-        };
-        fetch('http://localhost:8000/Register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(createAcctQuery), //sent as a JSON string
-            })
-            .then(res => res.json())
-            .then(data => setData(JSON.stringify(data)))
-            .catch(error => console.error(error));
+        //Make sure email is valid for email verification
+        if(!checkEmail(emailInput)){
+            setMessage("Please enter a valid email.");
+            return;
+        } else {
+            setMessage("Creating your account...");
+            event.preventDefault();
+            const createAcctQuery = {
+                firstName: fNameInput,
+                lastName: lNameInput,
+                username: usernameInput,
+                password: passwordInput,
+                email: emailInput,
+                phoneNum: phoneNumInput
+            };
+            fetch('http://localhost:8000/Register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(createAcctQuery), //sent as a JSON string
+                })
+                .then(res => res.json())
+                .then(data => setMessage(data.response))
+                .catch(error => setMessage(error.response));
+        }
     }
 
     return (
@@ -72,8 +86,7 @@ export default function CreateAccount() {
                 <button onClick={submitCreateAcct}>Submit</button>
             </div>
             <div>
-                <p>Results from server:</p>
-                <p>{data}</p>
+                <p>{message}</p>
             </div>
         </div>
     )

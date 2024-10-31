@@ -37,10 +37,10 @@ export default function Login() {
                     localStorage.setItem('token', data.token);
                     window.location.pathname = "/Home";
                 } else {
-                    setLoginMessage("Login rejected. Please enter valid credentials...");
+                    setLoginMessage(data.response);
                 }
             })
-            .catch(error => console.error(error));
+            .catch(error => setLoginMessage(error.response));
     }
 
     return (
@@ -61,12 +61,12 @@ export default function Login() {
                     <button onClick={submitLogin}>Log In</button>
                 </div>
             </div>
+            <p class="main-container">{loginMessage}</p>
             <div class="main-container">
                 <div class="user-info-box">
                     <label class="profile-description">Need an account?</label>
                     <CustomNavLink href="/CreateAccount">Create Account</CustomNavLink>
                 </div>
-                <p>{loginMessage}</p>
             </div>
         </div>
     )
