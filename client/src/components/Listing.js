@@ -1,33 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { motion, useTransform, useMotionValue } from "framer-motion";
+import React, { useEffect, useState, useRef } from 'react';
+import { motion, useTransform, useMotionValue, useAnimation } from "framer-motion";
 import {Authorization} from '../components/Authorization';
 
 function Listing() {
-    const [pageUpdater, setPageUpdater] = useState(true); // useEffect runs when pageUpdater changes value, listen (it works)
     const [shownImage, setShownImage] = useState([]);
+    const [isImgLoaded, setIsImgLoaded] = useState(false);
+    const img = new Image();
+
+    img.onload = () => {
+        setIsImgLoaded(true); // set use state once image is confirmed to be loaded
+    }
 
     useEffect(() => {
-        Authorization();
-
-        const imageQuery = {
-            token: localStorage.getItem('token'),
-            currListing: shownImage[1],
-        };
-        fetch('http://localhost:8000/getListing', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(imageQuery),
-        })
-        .then(res => res.json())
-        .then(data => {
-            setShownImage([data['imagePath'], data['listingId'], data['creatorUsername']])
-        });
+        getNewListing() // on page load, get first listing
     }, []);
 
     const getNewListing = async () => {
         Authorization();
+        setIsImgLoaded(false);
 
         const imageQuery = {
             token: localStorage.getItem('token'),
@@ -43,13 +33,11 @@ function Listing() {
         .then(res => res.json())
         .then(data => {
             setShownImage([data['imagePath'], data['listingId'], data['creatorUsername']])
+            img.src = data['imagePath']; // set source of image, needed to determine if it is loaded or not
         });
-        x.set(0);
     }
 
-
     const imageYes = async () => {
-        //window.location.reload(); // PAGE BREAKS WITHOUT THIS
         await getNewListing();
         const matchPayload = {
             token: localStorage.getItem('token'),
@@ -69,19 +57,28 @@ function Listing() {
         await getNewListing();
     }
 
-    const x = useMotionValue(0);
-
-    const rotate = useTransform(x, [-150, 150], [-10, 10]);
-    const opacity = useTransform(x, [-150, 0, 150], [0, 1, 0]);
+    const x = useMotionValue(0); // track x value of listing
+    const rotate = useTransform(x, [-150, 150], [-19, 19]); // handle rotation of listing
+    const transformedOpacity = useTransform(x, [-150, 0, 150], [0, 1, 0]); // opacity changer during dragging
+    const controls = useAnimation();
 
     const handleDragEnd = () => {
-        if (x.get() > 50) {
+        if (x.get() > 150) {
+            controls.start({ x: 0, opacity: 0, transition: { duration: 0 } }); // quickly make div invisible and set position back to 0
             imageYes();
         }
-        else if (x.get() < -50) {
+        else if (x.get() < -150) {
+            controls.start({ x: 0, opacity: 0, transition: { duration: 0 } }); // quickly make div invisible and set position back to 0
             imageNo();
         }
     }
+
+    useEffect(() => { // use effect, will only run when the isImgLoaded useState is changed
+        if (isImgLoaded) // make sure image is loaded before making visible
+            controls.start({ opacity: 1, transition: { duration: 1 } });
+    }, [isImgLoaded])
+
+    const motionRef = useRef(null);
 
     return (
         <div className = 'listing-section'>
@@ -91,13 +88,13 @@ function Listing() {
                 gridColumn: 1,
                 x,
                 rotate,
-                opacity,
             }}
             drag="x"
             dragConstraints={{
                 left: 0,
                 right: 0,
             }}
+            animate={controls}
             onDragEnd = {handleDragEnd}
             >
                 <img 
