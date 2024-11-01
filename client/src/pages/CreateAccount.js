@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import CustomNavLink from "../components/CustomNavLink";
 
 export default function CreateAccount() {
+    const host = process.env.REACT_APP_BACKEND_HOST;
     //account creation variables
     const [fNameInput, setFName] = useState("");
     const [lNameInput, setLName] = useState("");
@@ -43,7 +44,7 @@ export default function CreateAccount() {
             email: emailInput,
             phoneNum: phoneNumInput
         };
-        fetch('http://localhost:8000/Register', {
+        fetch(host + '/Register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

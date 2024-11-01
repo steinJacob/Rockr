@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { useLocation } from 'react-router-dom';
 
 export default function VerifyingEmail() {
+    const host = process.env.REACT_APP_BACKEND_HOST;
     const [message, setMessage] = useState('Verifying...');
     const location = useLocation();
 
@@ -11,7 +12,7 @@ export default function VerifyingEmail() {
         console.log(token);
         console.log('verifying in the backend...');
         if(token) {
-            fetch(`http://localhost:8000/verify?token=${token}`)
+            fetch(host + `/verify?token=${token}`)
                 .then(res => res.json())
                 .then(data => {setMessage(data.response)})
                 .catch(error => {setMessage(error.response)});

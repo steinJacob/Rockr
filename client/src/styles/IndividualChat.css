@@ -15,11 +15,11 @@
 }
 
 .main-area {
-    background-color: antiquewhite;
+    background-color: black;
     height: 100%;
     width: auto;
     flex: 1;
-    color: black;
+    color: white;
     text-align: center;
 }
 
@@ -76,5 +76,5 @@ body, html {
     margin: 0px;
     padding: 0px;
     border: 0px;
-    background-color: antiquewhite;
+    background-color: black;
 }

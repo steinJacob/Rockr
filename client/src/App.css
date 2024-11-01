@@ -32,7 +32,7 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  background-color: rgb(17, 17, 17);
+  background-color: #111418;
   color: white;
   text-align: left;
   height: 100vh;

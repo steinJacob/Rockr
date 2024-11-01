@@ -3,6 +3,7 @@ import { motion, useTransform, useMotionValue, useAnimation } from "framer-motio
 import {Authorization} from '../components/Authorization';
 
 function Listing() {
+    const host = process.env.REACT_APP_BACKEND_HOST;
     const [shownImage, setShownImage] = useState([]);
     const [isImgLoaded, setIsImgLoaded] = useState(false);
     const img = new Image();
@@ -23,7 +24,7 @@ function Listing() {
             token: localStorage.getItem('token'),
             currListing: shownImage[1],
         };
-        fetch('http://localhost:8000/getListing', {
+        fetch(host + '/getListing', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -44,7 +45,7 @@ function Listing() {
             token: localStorage.getItem('token'),
             currListing: shownImage[1]
         };
-        fetch('http://localhost:8000/matchedListing', {
+        fetch(host + '/matchedListing', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

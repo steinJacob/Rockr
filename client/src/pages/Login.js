@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Login.css';
 export default function Login() {
+    const host = process.env.REACT_APP_BACKEND_HOST;
+
     //Variables for user input
     const [uNameInput, setUName] = useState("");
     const [passInput, setPassword] = useState("");
@@ -26,7 +28,7 @@ export default function Login() {
             username: uNameInput,
             password: passInput
         };
-        fetch('http://localhost:8000/login', {
+        fetch(host + '/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

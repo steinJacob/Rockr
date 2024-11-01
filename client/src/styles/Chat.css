@@ -12,7 +12,7 @@
 }
 
 .main-area {
-    background-color: antiquewhite;
+    background-color: black;
     height: 100%;
     width: auto;
     flex: 1;
@@ -21,33 +21,43 @@
 }
 
 .all-chats {
-    background-color: antiquewhite;
+    background-color: black;
     height: 100%;
     width: auto;
     flex: 1;
-    color: rgb(9, 9, 9);
+    color: white;
 }
 
 .individual-chat {
-    background-color: rgb(206, 178, 142);
+    background-color: #111418;
     height: 10%;
     width: auto;
     flex: 1;
     display: flex;
-    color: black;
+    color: white;
     margin: 15px;
     padding: 5px;
     cursor: pointer;
+    border: double 1em transparent;
+    border-radius: 1.15rem;
+    border-width: 0px;
+    background-image: linear-gradient(#111418, #111418), 
+                    linear-gradient(to right, #fc2776, #ff6630);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
 }
 
 .chat-image {
     height: 180px;
+    border-radius: .75rem;
 }
 
 .chat-titles {
     padding-left: 50px;
     width: 20%;
     text-align: left;
+    justify-content: center;
+    align-items: center;
     flex: 1;
 }
 
@@ -71,5 +81,5 @@ body, html {
     margin: 0px;
     padding: 0px;
     border: 0px;
-    background-color: antiquewhite;
+    background-color: black;
 }
