@@ -259,7 +259,7 @@ app.post('/getListing', async (req, res) => {
   console.log(prefColorStr);
 
   // used to query database to get listing
-  query = "SELECT listingId, imagePath, creatorId FROM (SELECT * FROM Listings WHERE listingId NOT IN (SELECT S.listingId FROM User_information U, Seen_listings S WHERE U.id = " + userId + " AND S.userId = U.id)) AS L, (SELECT id FROM User_information WHERE id = " + userId + ") AS U WHERE L.creatorId <> U.id" + prefPriceStr + prefColorStr + prefConditionStr + ";";
+  query = "SELECT listingId, imagePath, creatorId, listingName, chairCondition, chairPrice, chairColor FROM (SELECT * FROM Listings WHERE listingId NOT IN (SELECT S.listingId FROM User_information U, Seen_listings S WHERE U.id = " + userId + " AND S.userId = U.id)) AS L, (SELECT id FROM User_information WHERE id = " + userId + ") AS U WHERE L.creatorId <> U.id" + prefPriceStr + prefColorStr + prefConditionStr + ";";
   //query = "SELECT listingId, imagePath, creatorId FROM Listings WHERE listingId NOT IN ( SELECT S.listingId FROM User_information U, Seen_listings S WHERE U.id = " + userId + " AND S.userId = U.id) LIMIT 1;";
   let listingId = ""
   let imagePath = ""
@@ -273,6 +273,11 @@ app.post('/getListing', async (req, res) => {
   listingId = queryResponse[0][0].listingId;
   imagePath = queryResponse[0][0].imagePath;
   creatorId = queryResponse[0][0].creatorId;
+  listingName = queryResponse[0][0].listingName;
+  chairCondition = queryResponse[0][0].chairCondition;
+  chairPrice = queryResponse[0][0].chairPrice;
+  chairColor = queryResponse[0][0].chairColor;
+  console.log(listingId, listingName, chairCondition, chairPrice, chairColor);
 
   query = "SELECT username FROM User_information WHERE id = " + creatorId + ";";
   let creatorUsername = "";
@@ -287,7 +292,7 @@ app.post('/getListing', async (req, res) => {
   let responsePath = imagePath;
   console.log("Sending listing");
   console.log("--------------------------------------");
-  return res.send(JSON.stringify({imagePath: responsePath, listingId: listingId, creatorUsername: creatorUsername}));
+  return res.send(JSON.stringify({imagePath: responsePath, listingId: listingId, creatorUsername: creatorUsername, listingName: listingName, chairCondition: chairCondition, chairPrice: chairPrice, chairColor: chairColor}));
 });
 
 app.post('/matchedListing', async (req, res) => {

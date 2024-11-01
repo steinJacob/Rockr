@@ -32,7 +32,8 @@ function Listing() {
         })
         .then(res => res.json())
         .then(data => {
-            setShownImage([data['imagePath'], data['listingId'], data['creatorUsername']])
+            console.log([data['imagePath'], data['listingId'], data['creatorUsername'], data['listingName'], data['chairCondition'], data['chairPrice'], data['chairColor']]);
+            setShownImage([data['imagePath'], data['listingId'], data['creatorUsername'], data['listingName'], data['chairCondition'], data['chairPrice'], data['chairColor']])
             img.src = data['imagePath']; // set source of image, needed to determine if it is loaded or not
         });
     }
@@ -59,7 +60,8 @@ function Listing() {
 
     const x = useMotionValue(0); // track x value of listing
     const rotate = useTransform(x, [-150, 150], [-19, 19]); // handle rotation of listing
-    const transformedOpacity = useTransform(x, [-150, 0, 150], [0, 1, 0]); // opacity changer during dragging
+    const transformedOpacityYes = useTransform(x, [0, 200], [0, 1]); // opacity changer during dragging
+    const transformedOpacityNo = useTransform(x, [0, -200], [0, 1])
     const controls = useAnimation();
 
     const handleDragEnd = () => {
@@ -82,14 +84,22 @@ function Listing() {
 
     return (
         <div className = 'listing-section'>
-            <motion.div className = 'listing'
+            <motion.div className = "no-div" style = {{
+                backgroundImage: 'url("notoggle.png")',
+                backgroundSize: "cover",
+                backgroundPosition: "right",
+                backgroundRepeat: "no-repeat",
+                opacity: transformedOpacityNo,
+            }}>
+            </motion.div>
+            <motion.div className = 'listing-grid'
             style = {{
                 gridRow: 1,
                 gridColumn: 1,
                 x,
                 rotate,
             }}
-            drag="x"
+            drag={shownImage[0] ==  "AllOut.jpeg" ? false : "x"}
             dragConstraints={{
                 left: 0,
                 right: 0,
@@ -98,7 +108,7 @@ function Listing() {
             onDragEnd = {handleDragEnd}
             >
                 <img 
-                    className = "listing-image"
+                    className = {shownImage[0] == "AllOut.jpeg" ? "listing-image-out" : "listing-image"}
                     draggable = "false"
                     style = {{
                         gridRow: 1,
@@ -106,12 +116,26 @@ function Listing() {
                     }}
                     src = {shownImage[0]}
                 />
-                <div style = {{
+                <div className = {shownImage[0] == "AllOut.jpeg" ? "listing-description-hidden" : "listing-description"} style = {{
                     gridRow: 1,
                     gridColumn: 1,
+                    backgroundImage: 'url("blackgradient.png")',
                 }}>
-                    TEXT
+                    <div className = "listing-name">
+                        <h1>{shownImage[3]}</h1>
+                    </div>
+                    <div className = "listing-details">
+                        <h4>${shownImage[5]}&emsp;&emsp;&emsp;{shownImage[4]}&emsp;&emsp;&emsp;{shownImage[6]}</h4>
+                    </div>
                 </div>
+            </motion.div>
+            <motion.div className = "yes-div" style = {{
+                backgroundImage: 'url("yestoggle.png")',
+                backgroundSize: "cover",
+                backgroundPosition: "right",
+                backgroundRepeat: "no-repeat",
+                opacity: transformedOpacityYes,
+            }}>
             </motion.div>
         </div>
     );

@@ -10,43 +10,8 @@
     align-items: center;
 }
 
-.header h1 {
-    text-align: center;
-    align-content: center;
-    color: white;
-    padding: 0px;
-    border: 0px;
-    margin: 0px;
-    width: 80%;
-}
-
-.header h2 {
-    cursor: pointer;
-    background-color: rgb(66, 33, 11);
-    padding: 5px;
-    margin: 10px;
-}
-
 .main-container {
     display: flex;
-}
-
-.sidebar {
-    display: flex;
-    height: 100vh;
-    flex-direction: column;
-    background-color: rgb(66, 33, 11);
-    color: white;
-    text-align: left;
-}
-
-.hidden {
-    display: none;
-}
-
-.sidebar div {
-    padding: 15px;
-    font-size: 24px;
 }
 
 .main-area {
