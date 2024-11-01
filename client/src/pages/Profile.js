@@ -10,6 +10,8 @@ import "../styles/Profile.css";
 export default function Profile() {
     Authorization();
 
+    const host = process.env.REACT_APP_BACKEND_HOST;
+
     //variables for current user info (from DB)
     const [firstName, setFName] = useState("");
     const [lastName, setLName] = useState("");
@@ -35,7 +37,7 @@ export default function Profile() {
     //by using the user's token, retrieve the user and their profile info
     const grabUserInfo = () => {
         let mytoken = localStorage.getItem('token');
-        fetch('http://localhost:8000/getUser', {
+        fetch(host + '/getUser', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -94,7 +96,7 @@ export default function Profile() {
             newphone: qPh
         };
         console.log(JSON.stringify(userObj));
-        fetch("http://localhost:8000/newUserInfo", {
+        fetch(host + "/newUserInfo", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

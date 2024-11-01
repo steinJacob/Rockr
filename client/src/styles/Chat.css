@@ -1,43 +1,5 @@
-.header {
-    display: flex;
-    background-color: rgb(27, 36, 43);
-    color: white;
-    border: 0px;
-    margin: 0px;
-    padding: 0px;
-    width: 100%;
-    height: 12%;
-    align-items: center;
-}
-
-.header h1 {
-    text-align: center;
-    align-content: center;
-    color: white;
-    padding: 0px;
-    border: 0px;
-    margin: 0px;
-    width: 80%;
-}
-
-.header h2 {
-    cursor: pointer;
-    background-color: rgb(48, 64, 76);
-    padding: 5px;
-    margin: 10px;
-}
-
 .main-container {
     display: flex;
-}
-
-.sidebar {
-    display: flex;
-    flex-direction: column;
-    background-color: antiquewhite;
-    color: white;
-    text-align: left;
-    height: 100vh;
 }
 
 .hidden {
@@ -50,7 +12,7 @@
 }
 
 .main-area {
-    background-color: antiquewhite;
+    background-color: black;
     height: 100%;
     width: auto;
     flex: 1;
@@ -59,33 +21,43 @@
 }
 
 .all-chats {
-    background-color: antiquewhite;
+    background-color: black;
     height: 100%;
     width: auto;
     flex: 1;
-    color: rgb(9, 9, 9);
+    color: white;
 }
 
 .individual-chat {
-    background-color: rgb(206, 178, 142);
+    background-color: #111418;
     height: 10%;
     width: auto;
     flex: 1;
     display: flex;
-    color: black;
+    color: white;
     margin: 15px;
     padding: 5px;
     cursor: pointer;
+    border: double 1em transparent;
+    border-radius: 1.15rem;
+    border-width: 0px;
+    background-image: linear-gradient(#111418, #111418), 
+                    linear-gradient(to right, #fc2776, #ff6630);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
 }
 
 .chat-image {
     height: 180px;
+    border-radius: .75rem;
 }
 
 .chat-titles {
     padding-left: 50px;
     width: 20%;
     text-align: left;
+    justify-content: center;
+    align-items: center;
     flex: 1;
 }
 
@@ -109,5 +81,5 @@ body, html {
     margin: 0px;
     padding: 0px;
     border: 0px;
-    background-color: antiquewhite;
+    background-color: black;
 }

@@ -106,24 +106,3 @@ body, html {
     border: 0px;
     background-color: antiquewhite;
 }
-
-.sidebar {
-    display: flex;
-    flex-direction: column;
-    background-color: rgb(66, 33, 11);
-    color: white;
-    text-shadow: 1px 1px 1px #C6A74A;
-    border-radius: 2px;
-    border-color: black;
-    text-align: left;
-    height: 100vh;
-}
-
-.hidden {
-    display: none;
-}
-
-.sidebar div {
-    padding: 15px;
-    font-size: 24px;
-}
