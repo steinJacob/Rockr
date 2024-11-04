@@ -21,7 +21,9 @@ export default function Home() {
     return (
         <>
             <Header isMenuVisible = {isMenuVisible} toggleMenu = {toggleMenu}/>
-            <div className = 'main-container'>
+            <div className = 'main-container' style = {{
+                flex: 1,
+            }}>
                 <SideMenu isMenuVisible = {isMenuVisible} menuNames = {menuNames} menuLinks = {menuLinks}/>
                 <Listing/>
             </div>

@@ -26,7 +26,7 @@ function App() {
           <Route path="/Settings" element= {<Settings/>} />
           <Route path="/Listings" element= {<Listings/>} />
           <Route path="/IndividualChat/:userId/:listingId" element= {<IndividualChat/>} />
-          <Route path="/verify" element={<VerifyingEmail />} />
+          <Route path="/VerifyEmail" element={<VerifyingEmail />} />
         </Routes>
       </div>  
     </Router>

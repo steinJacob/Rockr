@@ -26,12 +26,13 @@
     width: auto;
     flex: 1;
     color: white;
+    display: flex;
+    flex-direction: column;
 }
 
 .individual-chat {
     background-color: #111418;
     height: 10%;
-    width: auto;
     flex: 1;
     display: flex;
     color: white;
@@ -53,7 +54,7 @@
 }
 
 .chat-titles {
-    padding-left: 50px;
+    padding: 10px;
     width: 20%;
     text-align: left;
     justify-content: center;

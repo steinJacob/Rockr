@@ -23,7 +23,8 @@ export default function Chat() {
     return (
         <>
             <Header isMenuVisible = {isMenuVisible} toggleMenu = {toggleMenu}/>
-            <div className="main-container">
+            <div className="main-container" style = {{
+            }}>
                 <SideMenu isMenuVisible = {isMenuVisible} menuNames = {menuNames} menuLinks = {menuLinks}/>
                 <div className = 'main-area'>
                     <div className = 'all-chat-area'>

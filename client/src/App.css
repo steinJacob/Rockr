@@ -16,7 +16,8 @@
     padding: 0px;
     border: 0px;
     margin: 0px;
-    flex:7;
+    flex:10;
+    font-size: 50px;
 }
 
 .menu-btn {
@@ -35,7 +36,9 @@
   background-color: #111418;
   color: white;
   text-align: left;
-  height: 100vh;
+  border-right: solid;
+  border-color: gray;
+  border-width: 1px;
 }
 
 .hidden {

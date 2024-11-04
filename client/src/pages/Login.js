@@ -38,7 +38,7 @@ export default function Login() {
             .then(res => res.json())
             .then(data => {
                 if (data.response == "accepted") {
-                    setLoginMessage("login accepted. Going to home...");
+                    setLoginMessage("Login accepted. Going to home...");
                     localStorage.setItem('token', data.token);
                     navigate("/Home");
                 }
@@ -50,30 +50,91 @@ export default function Login() {
     }
 
     return (
-        <div>
-            <h1 class="header">Welcome to the Login Page!</h1>
-            <p class="spacer"> </p>
-            <div class="main-container">
-                <div class="user-info-box">
-                    <div>
+        <>
+            <div className = "header" style = {{
+                backgroundImage: 'url("' + host + '/banner.png")',
+                backgroundSize: "cover",
+                backgroundPosition: "right",
+                backgroundRepeat: "no-repeat",
+            }}>
+                <h1>Rockr</h1>
+            </div>
+            <div className = "login-div" style = {{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+            }}>
+                <h1 style = {{
+                    color: "white",
+                    margin: "0",
+                    padding: "0",
+                }}>Login</h1>
+                <div class="main-container" style = {{
+                    justifyContent: "center",
+                }}>
+                    <div class="user-info-box">
+                        <div style = {{
+                            display: "flex",
+                            flexDirection: "column",
+                        }}>
                         <label class="login-label">Username:</label>
-                        <input type="text" class="input-text" id="userInputText" name="userInputText" placeholder="Username" onChange={handleUsernameChange} />
+                            <input type="text" class="input-text" id="userInputText" name="userInputText" placeholder="Username" onChange={handleUsernameChange} style = {{
+                                width: "70%",
+                                padding: "0",
+                                margin: "0",
+                                alignSelf: "center",
+                            }}/>
+                        </div>
+                        <div style = {{
+                            display: "flex",
+                            flexDirection: "column",
+                        }}>
+                        <label class="login-label">Password: </label>
+                            <input type="text" class="input-text" id="passInputText" name="passInputText" placeholder="Password" onChange={handlePasswordChange} style = {{
+                                width: "70%",
+                                padding: "0",
+                                margin: "0",
+                                alignSelf: "center",
+                            }}/>
+                        </div>
+                        <p> </p>
+                        <button onClick={submitLogin} style = {{
+                            backgroundColor: "black",
+                            color: "white",
+                            padding: "5px 10px",
+                            borderColor: "white",
+                            borderRadius: "100px",
+                            cursor: "pointer",
+                            margin: "10px",
+                        }}>Log In</button>
                     </div>
-                    <div>
-                    <label class="login-label">Password: </label>
-                        <input type="text" class="input-text" id="passInputText" name="passInputText" placeholder="Password" onChange={handlePasswordChange} />
+                </div>
+                <h1 style = {{
+                    color: "white",
+                    marginBottom: "0",
+                    paddingBottom: "0",
+                }}>Register</h1>
+                <div class="main-container" style = {{
+                    justifyContent: "center",
+                }}>
+                    <div class="user-info-box" style = {{
+                        display: "flex",
+                        flexDirection: "column",
+                    }}>
+                        <label class="profile-description">Need an account?</label>
+                        <Link to="/CreateAccount" style = {{
+                            backgroundImage: "linear-gradient(to right, #fc2776, #ff6630)",
+                            color: "white",
+                            padding: "5px 10px",
+                            borderColor: "white",
+                            borderRadius: "100px",
+                            cursor: "pointer",
+                            margin: "10px",
+                        }}>Create Account</Link>
                     </div>
-                    <p> </p>
-                    <button onClick={submitLogin}>Log In</button>
+                    <p>{loginMessage}</p>
                 </div>
             </div>
-            <div class="main-container">
-                <div class="user-info-box">
-                    <label class="profile-description">Need an account?</label>
-                    <Link to="/CreateAccount">Create Account</Link>
-                </div>
-                <p>{loginMessage}</p>
-            </div>
-        </div>
+        </>
     )
 }

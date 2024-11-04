@@ -36,8 +36,12 @@ function AllChats({ navigate }) {
 
     return (
         <div className = 'all-chats'>
-            <div className = 'outgoing-chats'>
-                <h2>Outgoing Chats</h2>
+            <h1>Outgoing Chats</h1>
+            <div className = 'outgoing-chats' style = {{
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+            }}>
                 {outgoingChats.map((item, index) => (
                     <div className = 'individual-chat' onClick={() => goToChat(item.username, item.listingId)}>
                         <img className = 'chat-image' src = {item.imagePath}></img>
@@ -45,15 +49,15 @@ function AllChats({ navigate }) {
                             <h2>{item.listingName}</h2>
                             <h3>{item.username}</h3>
                         </div>
-                        <div className = 'last-message'>
-                            <h4></h4>
-                        </div>
                     </div>
                 ))}
             </div>
-            <hr></hr>
-            <div className = 'incoming-chats'>
-                <h2>Incoming Chats</h2>
+            <h1>Incoming Chats</h1>
+            <div className = 'incoming-chats' style = {{
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+            }}>
                 {incomingChats.map((item, index) => (
                     <div className = 'individual-chat' onClick={() => goToChat(item.username, item.listingId)}>
                         <img className = 'chat-image' src = {item.imagePath}></img>

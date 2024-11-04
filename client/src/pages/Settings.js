@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Authorization } from '../components/Authorization';
+import Header from '../components/Header';
+import SideMenu from '../components/SideMenu';
 import "../styles/Home.css";
 import "../styles/Settings.css";  // Ensure your CSS file path is correct
 
@@ -8,6 +10,13 @@ import "../styles/Settings.css";  // Ensure your CSS file path is correct
 export default function Settings() {
     Authorization();  // Authorization check
     const navigate = useNavigate();
+
+    const [isMenuVisible, setIsMenuVisible] = useState(false);
+    const toggleMenu = () => {
+        setIsMenuVisible(prev => !prev);
+    }
+    const menuNames = ['Home', 'Chat', 'Profile', 'My Listings', 'Settings'];
+    const menuLinks = ['/Home', '/Chat', '/Profile', '/Listings', '/Settings'];
 
     const [darkMode, setDarkMode] = useState(false);
     const [fontSize, setFontSize] = useState(16);
@@ -50,43 +59,46 @@ export default function Settings() {
     };
 
     return (
-        <div className="settings-page" style={{ fontSize: `${fontSize}px` }}>
-            <h1 className="header">Welcome to the Settings Page!</h1>
-            <div className="navigation-link">
-                <Link to="/Home">Home</Link>
+        <>
+            <Header isMenuVisible = {isMenuVisible} toggleMenu = {toggleMenu}/>
+            <div className = "main-container">
+                <SideMenu isMenuVisible = {isMenuVisible} menuNames = {menuNames} menuLinks = {menuLinks}/>
+                <div className = "main-area">
+                    <div className="settings-page" style={{ fontSize: `${fontSize}px` }}>
+                        <div className="settings-container">
+                            <div className="setting-item">
+                                <label>Dark Mode:</label>
+                                <button onClick={toggleDarkMode} className="toggle-button">
+                                    {darkMode ? "Disable Dark Mode" : "Enable Dark Mode"}
+                                </button>
+                            </div>
+
+                            <div className="setting-item">
+                                <label>Font Size:</label>
+                                <input
+                                    type="range"
+                                    min="12"
+                                    max="24"
+                                    value={fontSize}
+                                    onChange={handleFontSizeChange}
+                                    className="font-slider"
+                                />
+                                <span>{fontSize}px</span>
+                            </div>
+
+                            <div className="setting-item">
+                                <button onClick={handleLogout} className="logout-button">Logout</button>
+                            </div>
+
+                            <div className="setting-item">
+                                <button onClick={handleDeleteAccount} className="delete-account-button">
+                                    Delete Account
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div className="settings-container">
-                <div className="setting-item">
-                    <label>Dark Mode:</label>
-                    <button onClick={toggleDarkMode} className="toggle-button">
-                        {darkMode ? "Disable Dark Mode" : "Enable Dark Mode"}
-                    </button>
-                </div>
-
-                <div className="setting-item">
-                    <label>Font Size:</label>
-                    <input
-                        type="range"
-                        min="12"
-                        max="24"
-                        value={fontSize}
-                        onChange={handleFontSizeChange}
-                        className="font-slider"
-                    />
-                    <span>{fontSize}px</span>
-                </div>
-
-                <div className="setting-item">
-                    <button onClick={handleLogout} className="logout-button">Logout</button>
-                </div>
-
-                <div className="setting-item">
-                    <button onClick={handleDeleteAccount} className="delete-account-button">
-                        Delete Account
-                    </button>
-                </div>
-            </div>
-        </div>
+        </>
     );
 }
