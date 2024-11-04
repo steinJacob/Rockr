@@ -386,11 +386,22 @@ app.post("/getIndividualChat", async (req, res) => {
     return res.send(JSON.stringify(""));
   }
 
-  query = "SELECT listingName FROM Listings WHERE listingId = " + listingId + ";";
+  query = "SELECT listingName, imagePath, chairCondition, chairPrice, chairColor FROM Listings WHERE listingId = " + listingId + ";";
   queryResponse = await sendQuery(query);
   if (!queryResponse)
     return;
   let listingName = queryResponse[0][0].listingName;
+  let imgPath = queryResponse[0][0].imagePath;
+  let chrCondition = queryResponse[0][0].chairCondition;
+  let chrPrice = queryResponse[0][0].chairPrice;
+  let chrColor = queryResponse[0][0].chairColor;
+  let creatorUser = "";
+  if (myId == actualCreator) {
+    creatorUser = username;
+  }
+  else {
+    creatorUser = otherUser;
+  }
 
   query = "SELECT text, timestamp, userId FROM Messages WHERE " + myId + " = userId AND " + otherId + " = receiverId AND listingId = " + listingId + " UNION SELECT text, timestamp, userId FROM Messages WHERE " + otherId + " = userId AND " + myId + " = receiverId AND listingId = " + listingId + " ORDER BY timestamp;";
   queryResponse = await sendQuery(query);
@@ -399,7 +410,7 @@ app.post("/getIndividualChat", async (req, res) => {
   let messages = queryResponse[0];
   console.log("responding with individual chat");
 
-  return res.send(JSON.stringify([myId, listingName, messages]));
+  return res.send(JSON.stringify([myId, listingName, messages, imgPath, chrCondition, chrPrice, chrColor, creatorUser, username]));
 })
 
 app.post("/sendMessage", async (req, res) => {
