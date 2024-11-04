@@ -86,7 +86,7 @@ function Listing() {
     return (
         <div className = 'listing-section'>
             <motion.div className = "no-div" style = {{
-                backgroundImage: 'url("notoggle.png")',
+                backgroundImage: 'url("' + host + '/notoggle.png")',
                 backgroundSize: "cover",
                 backgroundPosition: "right",
                 backgroundRepeat: "no-repeat",
@@ -120,7 +120,7 @@ function Listing() {
                 <div className = {shownImage[0] == "AllOut.jpeg" ? "listing-description-hidden" : "listing-description"} style = {{
                     gridRow: 1,
                     gridColumn: 1,
-                    backgroundImage: 'url("blackgradient.png")',
+                    backgroundImage: 'url("' + host + '/blackgradient.png")',
                 }}>
                     <div className = "listing-name">
                         <h1>{shownImage[3]}</h1>
@@ -131,7 +131,7 @@ function Listing() {
                 </div>
             </motion.div>
             <motion.div className = "yes-div" style = {{
-                backgroundImage: 'url("yestoggle.png")',
+                backgroundImage: 'url("' + host + '/yestoggle.png")',
                 backgroundSize: "cover",
                 backgroundPosition: "right",
                 backgroundRepeat: "no-repeat",

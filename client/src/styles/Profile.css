@@ -1,18 +1,19 @@
 .main-container {
     display: flex;
-    align-content: center;
-    justify-content: center;
-}
-.header {
-    width: 100%;
-    text-align: center;
-    color:antiquewhite;
-    background-color: saddlebrown;
-    left:2px;
 }
 
-.header h1 {
-    color:antiquewhite;
+.user-info-box {
+    background-color: #111418;
+    color: white;
+    margin: 15px;
+    width: 30%;
+    border: double 1em transparent;
+    border-radius: 1.15rem;
+    border-width: 5px;
+    background-image: linear-gradient(#111418, #111418), 
+                    linear-gradient(to right, #fc2776, #ff6630);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
 }
 
 .profile {
@@ -38,66 +39,49 @@
 .input-text {
     width: 250px;
     height: 25px;
-    border-color: #C6A74A;
-    border-style:double;
+    border-color: white;
     border-width:5px;
-    border-radius: 10px;
+    border-radius: 100px;
     text-align: center;
-    background-color: antiquewhite;
+    background-color: black;
     font-size: 16px;
-    text-shadow: 1px 1px 1px slategray;
+    color: white;
+    margin: 5px;
 }
 
 .button {
-    background-color: antiquewhite;
-    color:black;
-    text-shadow: 1px 1px 1px slategray;
+    background-color: black;
+    color:white;
     padding: 5px 10px;
-    border-top-color: red;
-    border-left-color: red;
-    border-bottom-color: darkred;
-    border-right-color: darkred;
+    border-color: white;
+    border-radius: 100px;
     cursor: pointer;
+    margin: 10px;
 } 
-.button:hover {
-    background-color:peachpuff;
-}
-
-.user-info-box {
-    display: flexbox;
-    border-style:groove;
-    border-color: darkred;
-    border-width: 5px;
-    box-shadow: 2px;
-    border-radius: 50px;
-    background-color: saddlebrown;
-    width: 500px;
-    padding: 25px;
-    margin: 20px;
-    color: white;
-    text-shadow: 2px 2px 2px rgb(0, 0, 0);
-    position:relative;
-    top: 20%;
-    justify-content: center;
-    text-align: center;
-}
 
 .change-info-box {
-    display: static;
-    border-style:groove;
-    border-color: darkred;
-    border-width: 5px;
-    background-color: saddlebrown;
-    padding: 25px;
-    margin: 20px;
-    box-shadow: 2px;
-    border-radius: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: double 1em transparent;
+    border-radius: 1.15rem;
+    border-width: 0px;
+    background-image: linear-gradient(#111418, #111418), 
+                    linear-gradient(to right, #fc2776, #ff6630);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    padding: 5px;
+    margin: 0px;
     color: white;
     text-shadow: 2px 2px 2px rgb(0, 0, 0);
     position:relative;
     top: -58px;
     left: 200px;
     justify-content: center;
+}
+
+.change-info-box label {
+    padding-top: 10px;
 }
 
 body, html {

@@ -132,86 +132,89 @@ export default function Profile() {
     }, []);
 
     return (
-        <div>
+        <>
             <Header class="header" isMenuVisible = {isMenuVisible} toggleMenu = {toggleMenu}/>
-            <SideMenu isMenuVisible = {isMenuVisible} menuNames = {menuNames} menuLinks = {menuLinks}/>
-            <div className="main-container">
-                <div class="user-info-box">
-                    <div>
-                        <h2>User Information</h2>
-                    </div>
-                    <p class="profile-description">First Name: {firstName}</p>
-                    <p></p>
-                    <p class="profile-description">Last Name: {lastName}</p>
-                    <p></p>
-                    <p class="profile-description">Username: {username}</p>
-                    <p></p>
-
-                    <Popup trigger={<button class="button">Change Profile Info</button>} position="right">
-                        <div class="change-info-box">
-                            <label>Input New First Name: </label>
-                            <div>
-                            <input type="text" class="input-text" value={newFirstName} placeholder={firstName} onChange={(e) => setNewFName(e.target.value)} />
-                            </div>
-                            <label>Input New Last Name: </label>
-                            <div>
-                            <input type="text" class="input-text" value={newLastName} placeholder={lastName} onChange={(e) => setNewLName(e.target.value)} />
-                            </div>
-                            <label>Input New Username: </label>
-                            <div>
-                            <input type="text" class="input-text" value={newUsername} placeholder={username} onChange={(e) => setNewUName(e.target.value)} />
-                            </div>
-                            <button class="button" onClick={changeUserInfo}>Submit New Profile Info</button>
+            <div className="main-container" style = {{
+                flex: '2',
+            }}>
+                <SideMenu isMenuVisible = {isMenuVisible} menuNames = {menuNames} menuLinks = {menuLinks}/>
+                <div className = "user-boxes" style = {{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    flex: "1",
+                }}>
+                    <div className="user-info-box">
+                        <div>
+                            <h2>User Information</h2>
                         </div>
-                    </Popup>
-                </div>
-            </div>
-            <div class="main-container">
-                <div class="user-info-box">
-                        <h2>  Communication  </h2>
-                        <p class="profile-description">Email: {email}</p>
+                        <p class="profile-description">First Name: {firstName}</p>
                         <p></p>
-                        <p class="profile-description">Phone Number: {phoneNum}</p>
+                        <p class="profile-description">Last Name: {lastName}</p>
                         <p></p>
+                        <p class="profile-description">Username: {username}</p>
+                        <p></p>
+
                         <Popup trigger={<button class="button">Change Profile Info</button>} position="right">
                             <div class="change-info-box">
-                                <label>Input New Email: </label>
+                                <label>Input New First Name: </label>
                                 <div>
-                                <input type="text" class="input-text" value={newEmail} placeholder={email} onChange={(e) => setNewEmail(e.target.value)} />
+                                <input type="text" class="input-text" value={newFirstName} placeholder={firstName} onChange={(e) => setNewFName(e.target.value)} />
                                 </div>
-                                <label>Input New Phone #: </label>
+                                <label>Input New Last Name: </label>
                                 <div>
-                                <input type="text" class="input-text" value={newPhoneNum} placeholder={phoneNum} onChange={(e) => setNewPhoneNum(e.target.value)} />
+                                <input type="text" class="input-text" value={newLastName} placeholder={lastName} onChange={(e) => setNewLName(e.target.value)} />
                                 </div>
-                                <button class="button" onClick={changeUserInfo}>Submit New Contact Info</button>
-                            </div>
-                        </Popup>
-                </div>
-            </div>
-            <div class="main-container">
-                <div class="user-info-box">
-                    <h2>  Password  </h2>
-                    <div>
-                        <p id="passwordText"> {passwordText} </p>
-                        <button class="button" id="toggleButton" onClick={showPassword}>Show</button>
-                        <Popup trigger={<button class="button">Change Password</button>} position="right">
-                            <div class="change-info-box">
-                                <label>Input New Email: </label>
+                                <label>Input New Username: </label>
                                 <div>
-                                <input type="text" class="input-text" value={newPassword} placeholder={passwordText} onChange={(e) => setNewPassword(e.target.value)} />
+                                <input type="text" class="input-text" value={newUsername} placeholder={username} onChange={(e) => setNewUName(e.target.value)} />
                                 </div>
-                                <button class="button" onClick={changeUserInfo}>Submit New Password</button>
+                                <button class="button" onClick={changeUserInfo}>Submit New Profile Info</button>
                             </div>
                         </Popup>
                     </div>
+                    <div class="user-info-box">
+                            <h2>  Communication  </h2>
+                            <p class="profile-description">Email: {email}</p>
+                            <p></p>
+                            <p class="profile-description">Phone Number: {phoneNum}</p>
+                            <p></p>
+                            <Popup trigger={<button class="button">Change Profile Info</button>} position="right">
+                                <div class="change-info-box">
+                                    <label>Input New Email: </label>
+                                    <div>
+                                    <input type="text" class="input-text" value={newEmail} placeholder={email} onChange={(e) => setNewEmail(e.target.value)} />
+                                    </div>
+                                    <label>Input New Phone #: </label>
+                                    <div>
+                                    <input type="text" class="input-text" value={newPhoneNum} placeholder={phoneNum} onChange={(e) => setNewPhoneNum(e.target.value)} />
+                                    </div>
+                                    <button class="button" onClick={changeUserInfo}>Submit New Contact Info</button>
+                                </div>
+                            </Popup>
+                    </div>
+                    <div class="user-info-box">
+                        <h2>  Password  </h2>
+                        <div>
+                            <p id="passwordText"> {passwordText} </p>
+                            <button class="button" id="toggleButton" onClick={showPassword}>Show</button>
+                            <Popup trigger={<button class="button">Change Password</button>} position="right">
+                                <div class="change-info-box">
+                                    <label>Input New Password: </label>
+                                    <div>
+                                    <input type="text" class="input-text" value={newPassword} placeholder={passwordText} onChange={(e) => setNewPassword(e.target.value)} />
+                                    </div>
+                                    <button class="button" onClick={changeUserInfo}>Submit New Password</button>
+                                </div>
+                            </Popup>
+                        </div>
+                    </div>
+                    <div class="user-info-box">
+                        <h2>  Location  </h2>
+                        <Geolocation />
+                    </div>
                 </div>
             </div>
-            <div class="main-container">
-                <div class="user-info-box">
-                    <h2>  Location  </h2>
-                    <Geolocation />
-                </div>
-            </div>
-        </div>
+        </>
     )
 }

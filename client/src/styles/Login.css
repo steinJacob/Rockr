@@ -1,12 +1,5 @@
 .main-container {
     display: flex;
-    align-content: center;
-    justify-content: center;
-}
-.header {
-    width: 100%;
-    justify-content: center;
-    top: 10%;
 }
 
 .spacer {
@@ -43,28 +36,17 @@
     font-size: 16px;
     text-shadow: 1px 1px 1px slategray;
 }
-
 .button {
-    color: slategray;
-}
+    background-color: black;
+    color:white;
+    padding: 5px 10px;
+    border-color: white;
+    border-radius: 100px;
+    cursor: pointer;
+    margin: 10px;
+} 
 
 .user-info-box {
-    display: flexbox;
-    border-style:groove;
-    border-color: black;
-    border-width: 5px;
-    background-color: saddlebrown;
-    width: 500px;
-    padding: 25px;
-    margin: 20px;
-    box-shadow: 2px;
-    border-radius: 50px;
-    color: white;
-    text-shadow: 2px 2px 2px rgb(0, 0, 0);
-    position:relative;
-    top: 20%;
-    justify-content: center;
-    text-align: center;
 }
 
 body, html {

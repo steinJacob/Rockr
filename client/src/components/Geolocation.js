@@ -46,7 +46,7 @@ const Geolocation = ({ currentUserId }) => {
 
   return (
     <div>
-      <button onClick={fetchLocation}>Get Location</button>
+      <button className = "button" onClick={fetchLocation}>Get Location</button>
       {loading && <p>Loading...</p>}
       {location && (
         <div>
