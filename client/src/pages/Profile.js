@@ -16,7 +16,6 @@ export default function Profile() {
     const [firstName, setFName] = useState("");
     const [lastName, setLName] = useState("");
     const [username, setUName] = useState("");
-    const [password, setPassword] = useState("");
     const [passwordText, setPassText] = useState("••••••••••");
     const [email, setEmail] = useState("");
     const [phoneNum, setPhoneNum] = useState("");
@@ -25,9 +24,12 @@ export default function Profile() {
     const [newFirstName, setNewFName] = useState("");
     const [newLastName, setNewLName] = useState("");
     const [newUsername, setNewUName] = useState("");
-    const [newPassword, setNewPassword] = useState("");
     const [newEmail, setNewEmail] = useState("");
     const [newPhoneNum, setNewPhoneNum] = useState("");
+
+    const [newPassword, setNewPassword] = useState("");
+    const [confirmPass, setConfirmPass] = useState("");
+    const [passwordMessage, setPMess] = useState("");
 
     //sidebar variables
     const [isMenuVisible, setIsMenuVisible] = useState(false);
@@ -49,7 +51,6 @@ export default function Profile() {
             setFName(data.FirstName);
             setLName(data.LastName);
             setUName(data.username);
-            setPassword(data.password);
             setEmail(data.email);
             setPhoneNum(data.phone);
         })
@@ -62,7 +63,6 @@ export default function Profile() {
         let qFN = newFirstName;
         let qLN = newLastName;
         let qUN = newUsername;
-        let qPa = newPassword;
         let qEm = newEmail;
         let qPh = newPhoneNum;
 
@@ -74,9 +74,6 @@ export default function Profile() {
         }
         if(newUsername.length === 0) {
             qUN = username;
-        }
-        if(newPassword.length === 0) {
-            qPa = password;
         }
         if(newEmail.length === 0) {
             qEm = email;
@@ -91,11 +88,9 @@ export default function Profile() {
             newfirstname: qFN,
             newlastname: qLN,
             newusername: qUN,
-            newpassword: qPa,
             newemail: qEm,
             newphone: qPh
         };
-        console.log(JSON.stringify(userObj));
         fetch(host + "/newUserInfo", {
             method: 'POST',
             headers: {
@@ -108,23 +103,39 @@ export default function Profile() {
             setFName(data.FirstName);
             setLName(data.LastName);
             setUName(data.username);
-            setPassword(data.password);
             setEmail(data.email);
             setPhoneNum(data.phone);
         })
         .catch(error => console.error(error));
     }
 
-    const toggleMenu = () => {
-        setIsMenuVisible(prev => !prev);
+    const changePassword = () => {
+        if(newPassword === confirmPass){
+            let mytoken = localStorage.getItem('token');
+            let userObj = {
+                token: mytoken,
+                password: newPassword
+            };
+            fetch(host + '/newUserPassword', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userObj)
+            })
+            .then(res => res.json())
+            .then(data => setPMess(data.response))
+            .catch(error => setPMess(error.response));
+
+            setNewPassword('');
+            setConfirmPass('');
+        } else {
+            setPMess('Your passwords do not match.');
+        }
     }
 
-    const showPassword = (event) => {
-        if(passwordText == password) {
-            setPassText("••••••••••");
-        } else {
-            setPassText(password);
-        }
+    const toggleMenu = () => {
+        setIsMenuVisible(prev => !prev);
     }
 
     useEffect(() => {
@@ -197,17 +208,21 @@ export default function Profile() {
                         <h2>  Password  </h2>
                         <div>
                             <p id="passwordText"> {passwordText} </p>
-                            <button class="button" id="toggleButton" onClick={showPassword}>Show</button>
                             <Popup trigger={<button class="button">Change Password</button>} position="right">
                                 <div class="change-info-box">
                                     <label>Input New Password: </label>
                                     <div>
                                     <input type="text" class="input-text" value={newPassword} placeholder={passwordText} onChange={(e) => setNewPassword(e.target.value)} />
                                     </div>
-                                    <button class="button" onClick={changeUserInfo}>Submit New Password</button>
+                                    <label>Confirm New Password: </label>
+                                    <div>
+                                        <input type="text" class="input-text" value={confirmPass} placeholder={passwordText} onChange={(e) => setConfirmPass(e.target.value)} />
+                                    </div>
+                                    <button class="button" onClick={changePassword}>Submit New Password</button>
                                 </div>
                             </Popup>
                         </div>
+                        <p>{passwordMessage}</p>
                     </div>
                     <div class="user-info-box">
                         <h2>  Location  </h2>

@@ -3,7 +3,8 @@ import { useLocation } from 'react-router-dom';
 
 export default function VerifyingEmail() {
     const host = process.env.REACT_APP_BACKEND_HOST;
-    const [message, setMessage] = useState('Verifying...');
+    const [message, setMessage] = useState('Ready to verify...');
+    const [navMessage, setNavMessage] = useState('');
     const location = useLocation();
 
     const VerifyEmail = () => {
@@ -14,7 +15,10 @@ export default function VerifyingEmail() {
         if(token) {
             fetch(host + `/verify?token=${token}`)
                 .then(res => res.json())
-                .then(data => {setMessage(data.response)})
+                .then(data => {
+                    setMessage(data.response);
+                    setNavMessage('You can now close this page.');
+                })
                 .catch(error => {setMessage(error.response)});
         }
         console.log("Completed fetch");
@@ -28,6 +32,7 @@ export default function VerifyingEmail() {
             <h1>Click here to verify your account:</h1>
             <button id='sumbitVerify' onClick={VerifyEmail}>Verify</button>
             <p>{message}</p>
+            <p>{navMessage}</p>
         </div>
     )
 }

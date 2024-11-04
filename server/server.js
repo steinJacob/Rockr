@@ -5,6 +5,7 @@ const mysql = require('mysql2/promise');
 const path = require('path');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
+const bcrypt = require('bcrypt');
 
 const app = express();
 
@@ -66,6 +67,15 @@ async function sendQuery(query, list=[]) {
   }
 }
 
+//Creates a hash of a user's password using a salt
+async function hashPassword(password) {
+  const saltRounds = 10;
+  const salt = await bcrypt.genSalt(saltRounds);
+  const hashedPass = await bcrypt.hash(password, salt);
+  // Do not need to return salt, as salt is part of the hashed password
+  return hashedPass;
+}
+
 //LISTENING FUNCTIONS
 
 //Takes user's submitted login input, finds username (if exists), compares password
@@ -82,37 +92,43 @@ app.post('/login', async (req, res) => {
     let queryResponse = await sendQuery('SELECT password, Verified FROM User_information WHERE username=?', [inUsername]);
     realPassword = queryResponse[0][0].password;
     userVerified = queryResponse[0][0].Verified;
+
+    let passwordsMatched = await bcrypt.compare(inPassword, realPassword);
+    console.log(inPassword);
+    console.log(realPassword);
+    console.log(passwordsMatched);
+    if(!passwordsMatched) {
+      return res.send(JSON.stringify({response: "Your password is incorrect."}));
+    } else if(userVerified == 0) {
+      return res.send(JSON.stringify({response: "Your email has not been verified. Please check your email."}));
+    } else {
+      let responseToken = '';
+      let hasToken = userTokenMap.has(body.username);
+      if (hasToken && isAuthorized(userTokenMap.get(body.username)[0])) 
+        responseToken = userTokenMap.get(body.username)[0];
+      else {
+        //assign user a token
+        responseToken = jwt.sign({username: body.username}, "3f9c8fdeb68c4c9188f1e4c8a7bdb59e");
+        const time = new Date();
+        userTokenMap.set(body.username, [responseToken, time]);
+      }
+      return res.send(JSON.stringify({response: "accepted", token: responseToken}));
+    }
   }
   catch (error) {
     console.log(error);
-  }
-
-  if (realPassword == "" || inPassword != realPassword || userVerified == 0)
-    return res.send(JSON.stringify({response: "rejected"}));
-  else if(inPassword == realPassword && userVerified == 1){
-    let responseToken = '';
-    let hasToken = userTokenMap.has(body.username);
-
-    if (hasToken && isAuthorized(userTokenMap.get(body.username)[0])) 
-      responseToken = userTokenMap.get(body.username)[0];
-    else {
-      //assign user a token
-      responseToken = jwt.sign({username: body.username}, "3f9c8fdeb68c4c9188f1e4c8a7bdb59e");
-      const time = new Date();
-      userTokenMap.set(body.username, [responseToken, time]);
-    }
-
-    return res.send(JSON.stringify({response: "accepted", token: responseToken}));
+    res.status(500).send(JSON.stringify({response: "Error fetching login information. Make sure your username is correct, or create an account."}));
   }
 });
 
 //Takes user input and registers user by putting information in database, with inputs, Verified=0, and a hex string verification token. User then checks their email and verfiies their account
 app.post('/Register', async (req, res) => {
   const { firstName, lastName, username, password, email, phoneNumber } = req.body;
+  const hashedPass = await hashPassword(password);
   const vToken = crypto.randomBytes(20).toString('hex')
   try {
     //Insert user's information into User_information table
-    await sendQuery('INSERT INTO User_information (FirstName, LastName, username, password, email, phone, vToken) VALUES (?, ?, ?, ?, ?, ?, ?)', [firstName, lastName, username, password, email, phoneNumber, vToken]);
+    await sendQuery('INSERT INTO User_information (FirstName, LastName, username, password, email, phone, vToken) VALUES (?, ?, ?, ?, ?, ?, ?)', [firstName, lastName, username, hashedPass, email, phoneNumber, vToken]);
     //Establish email service & credentials
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -126,14 +142,13 @@ app.post('/Register', async (req, res) => {
       from: 'rockr.verify@gmail.com',
       to: email,
       subject: 'Email Verification',
-      text: `Please verify your email by clicking this link:
-      http://localhost:${frontendPort}/verify?token=${vToken}`
+      text: `Please verify your email by clicking this link: http://localhost:8000/VerifyEmail?token=${vToken}`
     };
     await transporter.sendMail(mailOptions);
-    res.status(200).send('Verification email sent!');
+    return res.status(200).send(JSON.stringify({response: 'A verification email has been sent to your email.'}));
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error registering user.');
+    return res.status(500).send(JSON.stringify({response: 'Error registering user.'}));
   }
 });
 
@@ -194,8 +209,7 @@ app.post('/getUser', async (req, res) => {
 app.post('/newUserInfo', async (req, res) => {
   const body = req.body;
   const userT = body.token;
-  const nFN = body.newfirstname, nLN = body.newlastname, nUN = body.newusername,
-        nPass = body.newpassword, nE = body.newemail, nPh = body.newphonenum;
+  const nFN = body.newfirstname, nLN = body.newlastname, nUN = body.newusername, nE = body.newemail, nPh = body.newphonenum;
   
   //grab user via token
   const user = isAuthorized(userT);
@@ -205,7 +219,7 @@ app.post('/newUserInfo', async (req, res) => {
   if(user) {
     //try-catches are separate to return relevant error messages for each problem
     try {
-      await sendQuery('UPDATE User_information SET username=?, password=?, email=?, phone=?, FirstName=?, LastName=? WHERE username=?', [nUN, nPass, nE, nPh, nFN, nLN, user]);
+      await sendQuery('UPDATE User_information SET username=?, email=?, phone=?, FirstName=?, LastName=? WHERE username=?', [nUN, nE, nPh, nFN, nLN, user]);
     } catch (error) {
       res.status(500).send(JSON.stringify({error: 'Error changing your info.'}));
     }
@@ -216,7 +230,24 @@ app.post('/newUserInfo', async (req, res) => {
       res.status(500).send(JSON.stringify({error: 'Error retrieving your new info.'}));
     }
   }
-})
+});
+
+app.post('/newUserPassword', async (req, res) => {
+  const userToken = req.body.token;
+  const inPassword = req.body.password;
+  const user = isAuthorized(userToken);
+  const newPass = await hashPassword(inPassword);
+  if(user) {
+    try{
+      await sendQuery('UPDATE User_information SET password=? WHERE username=?', [newPass, user]);
+      return res.status(200).send(JSON.stringify({response: 'Password changed successfully.'}));
+    } catch (error) {
+      return res.status(500).send(JSON.stringify({response: 'Error changing your password.'}));
+    }
+  } else {
+    return res.status(500).send(JSON.stringify({response: 'Could not find your account.'}));
+  }
+});
 
 app.post('/getListing', async (req, res) => {
   console.log("user requesting listing");

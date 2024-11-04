@@ -38,7 +38,7 @@ export default function Login() {
             .then(res => res.json())
             .then(data => {
                 if (data.response == "accepted") {
-                    setLoginMessage("login accepted. Going to home...");
+                    setLoginMessage("Login accepted. Going to home...");
                     localStorage.setItem('token', data.token);
                     navigate("/Home");
                 }
