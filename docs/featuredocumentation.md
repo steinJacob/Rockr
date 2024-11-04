@@ -26,6 +26,8 @@ User can input their personal information and submit it.
 - Successful Submission: The user's account is added and saved to the database, and the user can then log in on future webpage visits.
 - Unsuccessful Submission: The user's account is not created.
 
+Users' passwords are hashed for security. If a user forgets their password, they can change it on the Profile page.
+
 ### Home.js
 The Home Page. Can be accessed via a successful login on the Login Page.
 
@@ -67,6 +69,12 @@ Login Inputs:
 User can input their personal username and password to gain access to the main site.
 - Successful Login: Redirected to Home Page
 - Unsuccessful Login: Remains on Login Page
+
+### Profile.js
+The Profile Page. Displays basic user information.
+Displays the user's information based on the User_information table. Allows the user to change any of their information. 
+
+Passwords cannot be viewed for security. If a user forgets their password, they can change it by entering the same password twice and submitting the new password to the server.
 
 </blockquote>
 
